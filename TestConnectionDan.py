@@ -19,9 +19,9 @@ def insertEvent(id, eventname, loc, start, end, current):
     ED = end
     CE = current
     cursor.execute("INSERT INTO Events (EventID, EventName, EventLocation, StartDate, EndDate, CurrentEvent) "
-               "VALUES (%i, %s, %s, %i, %i, %b)", (EID, EName, ELoc, SD, ED, CE))
+                   "VALUES (%i, %s, %s, %i, %i, %b)", (EID, EName, ELoc, SD, ED, CE))
 
-insertEvent(4, 'Carson', 'Detroit', 20200304, 20200306, 0)
+insertEvent(4, 'Carson', 'Detroit', 20200304, 20200306, 1)
 
 conn.commit()
 
