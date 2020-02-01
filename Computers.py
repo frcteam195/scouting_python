@@ -10,22 +10,14 @@ cursor = conn.cursor()
 
 cursor.execute("SELECT * FROM team195_scouting.Computers;")
 
-def insertComputer(id, name, typeID, stationID, trainingMode, robotImagePath, matchVideoPath, redOnLeft, matchIDToAnalyze, offline, defenseAdmin, admin, fieldOrientation):
+def insertComputer(id, name, typeID, connectionStatus, stationID):
     CompID = id
     CompName = name
     CompTID = typeID
+    CS = connectionStatus
     SID = stationID
-    TM = trainingMode
-    RIP = robotImagePath
-    MVP = matchVideoPath
-    ROL = redOnLeft
-    MIDToAn = matchIDToAnalyze
-    Off = offline
-    DA = defenseAdmin
-    A = admin
-    FO = fieldOrientation
-    sql = "INSERT INTO Computers (ComputerID, ComputerName, ComputerTypeID, AllianceStationID, TrainingMode, RobotImagePath, MatchVideoPath, RedOnLeft, MatchIDToAnalyze, Offline, DefenseAdmin, Admin, FieldOrientation) VALUES (%i, %s, %i, %i, %b, %s, %s, %b, %i, %b, %b, %b, %i)"
-    iden = (CompID, CompName, CompTID, SID, TM, RIP, MVP, ROL, MIDToAn, Off, DA, A, FO)
+    sql = "INSERT INTO Computers (ComputerID, ComputerName, ComputerTypeID, ConnectionStatus, StationID) VALUES (%i, %s, %i, %b, %i)"
+    iden = (CompID, CompName, CompTID, CS, SID)
 
     cursor.execute(sql, iden)
 
