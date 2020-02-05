@@ -22,3 +22,9 @@ def insertComputer(id, name, typeID, connectionStatus, stationID):
     cursor.execute(sql, iden)
 
     conn.commit()
+
+def readComputer(id, name, typeID, connectionStatus, stationID):
+    test = {'Computer ID' : id, 'Computer Name' : name, 'Computer Type ID' : typeID, 'Connection Status' : connectionStatus, 'Station ID' : stationID}
+    import json
+    x = json.dumps(test)
+    print(x)
