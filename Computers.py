@@ -4,7 +4,7 @@ import statistics
 
 conn = mariaDB.connect(user='admin',
                        passwd='Einstein195',
-                       host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                       host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                        database='team195_scouting')
 cursor = conn.cursor()
 
@@ -28,3 +28,5 @@ def readComputer(id, name, typeID, connectionStatus, stationID):
     import json
     x = json.dumps(test)
     print(x)
+
+readComputer(1, "Junk", 0, 0, 2)
