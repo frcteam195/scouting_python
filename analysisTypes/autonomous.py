@@ -9,13 +9,8 @@ def autonomous(analysis, rsRobotMatches):
     rsCEA['AnalysisTypeID'] = 2
     numberOfMatchesPlayed = 0
 
-    totalHighBalls = 0
-    totalBalls = 0
     totalHighBallsList = []
     totalBallsList = []
-    #sumTotalHighBalls = 0
-    #sumTotalBalls = 0
-    #medianList = []
 
     # Loop through each match the robot played in.
     for matchResults in rsRobotMatches:
@@ -82,7 +77,7 @@ def autonomous(analysis, rsRobotMatches):
         # Some test code for calculating min, max, quantiles
         #print(min(totalBallsList))
         #print(max(totalBallsList))
-        testList = [22, 33, 44, 23, 43, 56, 43, 56, 76, 99, 23, 1, 109, 34, 76, 89, 99, 23, 55]
-        print(np.quantile(testList, 0.25))
+        #testList = [22, 33, 44, 23, 43, 56, 43, 56, 76, 99, 23, 1, 109, 34, 76, 89, 99, 23, 55]
+        #print(np.quantile(testList, 0.25))
 
     return rsCEA
