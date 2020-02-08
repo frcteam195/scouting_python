@@ -2,6 +2,7 @@ import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 from analysisTypes.startingPosition import startingPosition   # AnalysisType = 1
 from analysisTypes.autonomous import autonomous   # AnalysisType = 2
+from analysisTypes.totalBalls import totalBalls # AnalysisType = 3
 
 # Define a Class called analysis
 class analysis():
@@ -95,6 +96,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
+                rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
 
 
     # Function to insert an rsCEA record into the DB.
