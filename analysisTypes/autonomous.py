@@ -80,8 +80,8 @@ def autonomous(analysis, rsRobotMatches):
         rsCEA['Summary3Display'] = statistics.median(totalBallsList)
         rsCEA['Summary3Value'] = statistics.median(totalBallsList)
         # Some test code for calculating min, max, quantiles
-        print(min(totalBallsList))
-        print(max(totalBallsList))
+        #print(min(totalBallsList))
+        #print(max(totalBallsList))
         testList = [22, 33, 44, 23, 43, 56, 43, 56, 76, 99, 23, 1, 109, 34, 76, 89, 99, 23, 55]
         print(np.quantile(testList, 0.25))
 
