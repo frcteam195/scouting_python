@@ -48,6 +48,5 @@ def lostComm(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they lost Comm
         rsCEA['Summary1Display'] = np.sum(lostCommList)/numberOfMatchesPlayed*100
-        print(np.sum(lostCommList)/numberOfMatchesPlayed*100)
 
     return rsCEA
