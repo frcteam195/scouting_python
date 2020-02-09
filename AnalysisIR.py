@@ -117,4 +117,4 @@ class analysis():
 
 # This initizlzes the analysis Class and thus runs the program.
 if __name__ == '__main__':
-    myScouting = analysis()
+    myAnalysis = analysis()
