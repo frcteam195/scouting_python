@@ -1,9 +1,11 @@
 import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
-from analysisTypes.startingPosition import startingPosition   # AnalysisType = 1
-from analysisTypes.autonomous import autonomous   # AnalysisType = 2
-from analysisTypes.totalscore import totalScore
-from analysisTypes.lostComm import lostComm #Analysis Type = 8
+from analysisTypes.autonomous import autonomous
+from analysisTypes.lostComm import lostComm
+from analysisTypes.startingPosition import startingPosition
+from analysisTypes.totalBalls import totalBalls
+from analysisTypes.totalScore import totalScore
+
 
 # Define a Class called analysis
 class analysis():
@@ -93,13 +95,24 @@ class analysis():
             rsRobotMatches = self._getTeamData(team)
 
             if rsRobotMatches:
-                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
+                # autonomous
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-                rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
+
+                # lostComm
                 rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # startingPosition
+                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # totalBalls
+                rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # totalScore
+                rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
 

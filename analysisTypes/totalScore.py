@@ -7,7 +7,7 @@ import numpy as np
 def totalScore(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 4
+    rsCEA['AnalysisTypeID'] = 40
     autoMoveBonus = 0
     rotationControl = 0
     positionControl = 0
@@ -105,5 +105,7 @@ def totalScore(analysis, rsRobotMatches):
         rsCEA['Summary1Value'] = statistics.mean(totalPointsList)
         rsCEA['Summary2Display'] = statistics.median(totalPointsList)
         rsCEA['Summary2Value'] = statistics.median(totalPointsList)
+
     return rsCEA
+
 print()
