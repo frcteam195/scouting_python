@@ -3,6 +3,7 @@ import mysql.connector as mariaDB
 from analysisTypes.startingPosition import startingPosition   # AnalysisType = 1
 from analysisTypes.autonomous import autonomous   # AnalysisType = 2
 from analysisTypes.totalscore import totalScore
+from analysisTypes.lostComm import lostComm #Analysis Type = 8
 
 # Define a Class called analysis
 class analysis():
@@ -98,6 +99,8 @@ class analysis():
                 self._insertAnalysis(rsCEA)
                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
+                rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 
 
     # Function to insert an rsCEA record into the DB.
@@ -117,4 +120,4 @@ class analysis():
 
 # This initizlzes the analysis Class and thus runs the program.
 if __name__ == '__main__':
-    myScouting = analysis()
+    myAnalysis = analysis()
