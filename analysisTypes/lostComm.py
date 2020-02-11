@@ -6,7 +6,7 @@ import numpy as np
 def lostComm(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 9
+    rsCEA['AnalysisTypeID'] = 17
     numberOfMatchesPlayed = 0
 
     lostCommList = []
