@@ -3,13 +3,13 @@ import numpy as np
 
 # ******************** AnalysisTypeID = 9 = lostComm *******************
 
-def lostComm(analysis, rsRobotMatches):
+def brokeDown(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 20
+    rsCEA['AnalysisTypeID'] = 21
     numberOfMatchesPlayed = 0
 
-    lostCommList = []
+    brokeDownList = []
 
     # Loop through each match the robot played in.
     for matchResults in rsRobotMatches:
@@ -24,22 +24,22 @@ def lostComm(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             # Retrieve values from the matchResults and set to appropriate variables
-            lostComm = matchResults[analysis.columns.index('SummLostComm')]
-            if lostComm is None:
-                lostComm = 0
-            if lostComm == 0:
-                lostCommString = 'No'
+            brokeDown = matchResults[analysis.columns.index('SummLostComm')]
+            if brokeDown is None:
+                brokeDown = 0
+            if brokeDown == 0:
+                brokeDownString = 'No'
             else:
-                lostCommString = 'Yes'
+                brokeDownString = 'Yes'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            lostCommList.append(lostComm)
+            brokeDownList.append(brokeDown)
 
             # Create the rsCEA records for Dsiplay, Value, and Format
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = lostCommString
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = lostComm
-            if lostComm == 0:
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = brokeDownString
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = brokeDown
+            if brokeDown == 0:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
@@ -47,6 +47,6 @@ def lostComm(analysis, rsRobotMatches):
     # Create summary data
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they lost Comm
-        rsCEA['Summary1Display'] = np.sum(lostCommList)/numberOfMatchesPlayed*100
+        rsCEA['Summary1Display'] = np.sum(brokeDownList)/numberOfMatchesPlayed*100
 
     return rsCEA
