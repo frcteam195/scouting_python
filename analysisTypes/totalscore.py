@@ -8,6 +8,12 @@ def totalScore(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 4
+    autoMoveBonus = 0
+    rotationControl = 0
+    positionControl = 0
+    climbPoints = 0
+    parkPoints = 0
+    levelPoints = 0
     numberOfMatchesPlayed = 0
     ballsScoredLowMultiplier = 1
     ballsScoredOuterMultiplier = 2
@@ -27,10 +33,17 @@ def totalScore(analysis, rsRobotMatches):
         rsCEA['Team'] = matchResults[analysis.columns.index('Team')]
         rsCEA['EventID'] = matchResults[analysis.columns.index('EventID')]
         # Identify the various different types of scoring
-        autoMoveBonus = matchResults[analysis.columns.index('AutoMoveBonus')]
+        if matchResults[analysis.columns.index('AutoMoveBonus')] == 1:
+            autoMoveBonus = 1
         autoBallsLow = matchResults[analysis.columns.index('AutoBallLow')]
+        if autoBallsLow is None:
+            autoBallsLow = 0
         autoBallsOuter = matchResults[analysis.columns.index('AutoBallOuter')]
+        if autoBallsOuter is None:
+            autoBallsOuter = 0
         autoBallsInner = matchResults[analysis.columns.index('AutoBallInner')]
+        if autoBallsInner is None:
+            autoBallsOuter = 0
         teleBallsLow = matchResults[analysis.columns.index('TeleBallLowZone1')]
         teleBallsOuter = matchResults[analysis.columns.index('TeleBallOuterZone1')] + \
                          matchResults[analysis.columns.index('TeleBallOuterZone2')] + \
@@ -45,7 +58,7 @@ def totalScore(analysis, rsRobotMatches):
         rotationControl = matchResults[analysis.columns.index('TeleWheelStage2Status')]
         positionControl = matchResults[analysis.columns.index('TeleWheelStage3Status')]
         if matchResults[analysis.columns.index('ClimbStatus')] == 1:
-            if matchResults[analysis.columns.index('ClimbStatus')] > 0:
+            if matchResults[analysis.columns.index('ClimbHeight')] > 0:
                 climbPoints = 1
                 parkPoints = 0
             else:
@@ -57,19 +70,21 @@ def totalScore(analysis, rsRobotMatches):
         levelPoints = matchResults[analysis.columns.index('ClimbLevelStatus')]
 
         # Adding up all the previously identified elements
-        totalPoints = (autoMoveBonusMultiplier * autoMoveBonus) + \
-                      (ballsScoredLowMultiplier * autoBallsLow * 2) + \
+        numberOfMatchesPlayed += 1
+        autoMovePoints = autoMoveBonusMultiplier * autoMoveBonus
+        totalPoints = autoMovePoints + (ballsScoredLowMultiplier * autoBallsLow * 2) + \
                       (ballsScoredOuterMultiplier * autoBallsOuter * 2) + \
                       (ballsScoredInnerMultiplier * autoBallsInner * 2) + \
                       (ballsScoredLowMultiplier * teleBallsLow) + \
                       (ballsScoredOuterMultiplier * teleBallsOuter) + \
                       (ballsScoredInnerMultiplier * teleBallsInner) + \
                       (rotationControlMultiplier * rotationControl) + \
-                      (positionControlMultiplier + positionControl) + \
+                      (positionControlMultiplier * positionControl) + \
                       (climbPointsMultiplier * climbPoints) + \
                       (parkPointsMultiplier * parkPoints) + \
                       (levelPointsMultiplier * levelPoints)
         totalPointsList.append(totalPoints)
+
         # Set the color
         rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = totalPoints
         rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalPoints
@@ -83,11 +98,12 @@ def totalScore(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
         else:
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
+
     # Set the summary questions
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = statistics.mean(totalPointsList)
         rsCEA['Summary1Value'] = statistics.mean(totalPointsList)
         rsCEA['Summary2Display'] = statistics.median(totalPointsList)
         rsCEA['Summary2Value'] = statistics.median(totalPointsList)
-
     return rsCEA
+print()
