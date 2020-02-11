@@ -1,4 +1,6 @@
 import mysql.connector as mariaDB
+import json
+import sys
 
 class dumpTable(object):
     def __init__(self, table):
@@ -15,22 +17,36 @@ class dumpTable(object):
                                     database='team195_scouting')
 
         self.cursor = self.conn.cursor()
-        self.dump(Matches)
+        while table == None:
+            table = input("Enter table name: ")
+            if len(table) == 0:
+                table = None
+            elif table == "?":
+                self._run_query("USE team195_scouting")
+                self._run_query("SHOW TABLES")
+                for row in self.cursor.fetchall():
+                    print(row)
+                table = None
+            
+        self.dump(table)
 
     def _run_query(self,query):
         self.cursor.execute(query)
 
     def dump(self,table):
-        self._run_query("SELECT * FROM team195_scouting." + arg + ";")
-        columns = [column[0] for column in cursor.description]
+        self._run_query("SELECT * FROM team195_scouting." + table + ";")
+        columns = [column[0] for column in self.cursor.description]
         print(columns)
         results = []
-        for row in cursor.fetchall():
+        for row in self.cursor.fetchall():
             results.append(dict(zip(columns, row)))
 
-        with open('data2.json', 'w') as outfile:
+        with open(table + '.json', 'w') as outfile:
             print(results)
             json.dump(results, outfile, sort_keys=True, indent=4, ensure_ascii=False)
 
 if __name__ == '__main__':
-    mydumpTable = dumpTable(object)
+    table = None
+    if len(sys.argv) > 1:
+        table = sys.argv[1]
+    mydumpTable = dumpTable(table)
