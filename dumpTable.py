@@ -18,15 +18,17 @@ class dumpTable(object):
 
         self.cursor = self.conn.cursor()
         while table == None:
-            table = input("Enter table name: ")
+            table = input("Enter table name ('?' for list of tables, 'q' to quit): ")
             if len(table) == 0:
                 table = None
             elif table == "?":
                 self._run_query("USE team195_scouting")
                 self._run_query("SHOW TABLES")
                 for row in self.cursor.fetchall():
-                    print(row)
+                    print(row[0])
                 table = None
+            elif table.lower() == 'q':
+                return
             
         self.dump(table)
 
