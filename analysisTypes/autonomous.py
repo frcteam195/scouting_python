@@ -1,5 +1,5 @@
 import statistics
-import numpy as np
+# import numpy as np
 
 # ******************** AnalysisTypeID = 2 = autonomous *******************
 
