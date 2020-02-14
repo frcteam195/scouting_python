@@ -29,8 +29,7 @@ def autonomous(analysis, rsRobotMatches):
         else:
             # Retrieve values from the matchResults and set to appropriate variables
             autoMoveBonus = matchResults[analysis.columns.index('AutoMoveBonus')]
-            autoPenalty = matchResults[analysis.columns.index('AutoPenalty')]
-            if autoPenalty == 1:
+            if autoPenaltyString == 1:
                 autoPenaltyString = "*"
             else:
                 autoPenaltyString = ""
