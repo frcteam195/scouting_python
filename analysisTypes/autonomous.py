@@ -29,7 +29,8 @@ def autonomous(analysis, rsRobotMatches):
         else:
             # Retrieve values from the matchResults and set to appropriate variables
             autoMoveBonus = matchResults[analysis.columns.index('AutoMoveBonus')]
-            if autoPenaltyString == 1:
+            autoPenalty = matchResults[analysis.columns.index('AutoPenalty')]
+            if autoPenalty == 1:
                 autoPenaltyString = "*"
             else:
                 autoPenaltyString = ""
@@ -51,7 +52,8 @@ def autonomous(analysis, rsRobotMatches):
             totalBallsList.append(autoBallLow + autoBallOuter + autoBallInner)
 
             # Create the rsCEA records for Dsiplay, Value, and Format
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(totalBalls) + "|" + str(totalHighBalls) + autoPenaltyString
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
+                str(totalBalls) + "|" + str(totalHighBalls) + autoPenaltyString
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalBalls
             if totalBalls > 3:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5

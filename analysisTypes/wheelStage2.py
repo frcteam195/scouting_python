@@ -1,14 +1,16 @@
 import statistics
+import numpy as np
+
 # ******************** AnalysisTypeID = 5 = Wheel - Stage 2 *******************
 
 def wheelStage2(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 3
+    rsCEA['AnalysisTypeID'] = 5
     numberOfMatchesPlayed = 0
-    teleWheelStage2StatusList = []
-    teleWheelStage2TimeList = []
-    teleWheelStage2AttemptsList = []
+    wheelStage2StatusList = []
+    wheelStage2TimeList = []
+    wheelStage2AttemptsList = []
 
     for matchResults in rsRobotMatches:
         rsCEA['Team'] = matchResults[analysis.columns.index('Team')]
@@ -21,34 +23,35 @@ def wheelStage2(analysis, rsRobotMatches):
         elif scoutingStatus == 2:
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
-            TeleWheelStage2Status = matchResults[analysis.columns.index('TeleWheelStage2Status')]
-            TeleWheelStage2Time = matchResults[analysis.columns.index('TeleWheelStage2Time')]
-            TeleWheelStage2Attempts = matchResults[analysis.columns.index('TeleWheelStage2Attempts')]
-            if TeleWheelStage2Status == 1:
-                TeleWheelStage2Status = "*"
-            if TeleWheelStage2Time is None:
-                TeleWheelStage2Time = 0
-            if TeleWheelStage2Attempts < 1:
-                TeleWheelStage2Attempts = "-"
+            wheelStage2Attempts = matchResults[analysis.columns.index('TeleWheelStage2Attempts')]
+            if wheelStage2Attempts == 1:
+                wheelStage2Status = matchResults[analysis.columns.index('TeleWheelStage2Status')]
+                if wheelStage2Status == 1:
+                    wheelStage2StatusString = "*"
+                else:
+                    wheelStage2StatusString = ""
+                wheelStage2StatusList.append(wheelStage2Status)
 
-            numberOfMatchesPlayed += 1
-            teleWheelStatus = TeleWheelStage2Status
-            totalWheelTime = TeleWheelStage2Time
-            totalWheelAttempts = TeleWheelStage2Attempts
-            teleWheelStage2StatusList.append(teleWheelStatus)
-            teleWheelStage2TimeList.append(totalWheelTime)
-            teleWheelStage2AttemptsList.append(totalWheelAttempts)
+                wheelStage2Time = matchResults[analysis.columns.index('TeleWheelStage2Time')]
+                if wheelStage2Time is None:
+                    wheelStage2Time = 999 # That should never happen - leaving the 999 in to show if there is an issue
+                wheelStage2TimeList.append(wheelStage2Time)
 
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                str(TeleWheelStage2Time) + TeleWheelStage2Attempts
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = TeleWheelStage2Time
+                # Write the record
+                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
+                    str(wheelStage2Time) + wheelStage2StatusString
+                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = wheelStage2Time
+            else:
+                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = "-"
 
-    if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = statistics.mean(teleWheelStage2TimeList)
-        rsCEA['Summary1Value'] = statistics.mean(teleWheelStage2TimeList)
-        rsCEA['Summary2Display'] = statistics.median(teleWheelStage2TimeList)
-        rsCEA['Summary2Value'] = statistics.median(teleWheelStage2TimeList)
-        rsCEA['Summary3Display'] = statistics.mean(teleWheelStage2TimeList)
-        rsCEA['Summary3Value'] = statistics.mean(teleWheelStage2TimeList)
+
+    if len(wheelStage2StatusList) != 0:
+        rsCEA['Summary1Display'] = statistics.mean(wheelStage2TimeList)
+        rsCEA['Summary1Value'] = statistics.mean(wheelStage2TimeList)
+        rsCEA['Summary2Display'] = statistics.median(wheelStage2TimeList)
+        rsCEA['Summary2Value'] = statistics.median(wheelStage2TimeList)
+        rsCEA['Summary3Display'] = np.sum(wheelStage2StatusList)/len(wheelStage2StatusList)*100
+        rsCEA['Summary3Value'] = np.sum(wheelStage2StatusList)/len(wheelStage2StatusList)*100
+        # NEED TO ADD SOME COLORS
 
     return rsCEA
