@@ -24,9 +24,9 @@ def wheelStage2(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             wheelStage2Attempts = matchResults[analysis.columns.index('TeleWheelStage2Attempts')]
-            if wheelStage2Attempts == 1:
+            if wheelStage2Attempts < 0:
                 wheelStage2Status = matchResults[analysis.columns.index('TeleWheelStage2Status')]
-                if wheelStage2Status == 1:
+                if wheelStage2Status > 1:
                     wheelStage2StatusString = "*"
                 else:
                     wheelStage2StatusString = ""
@@ -37,13 +37,14 @@ def wheelStage2(analysis, rsRobotMatches):
                     wheelStage2Time = 999 # That should never happen - leaving the 999 in to show if there is an issue
                 wheelStage2TimeList.append(wheelStage2Time)
 
+                wheelStage2AttemptsList.append(wheelStage2Attempts)
                 # Write the record
+                numberOfMatchesPlayed += 1
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
                     str(wheelStage2Time) + wheelStage2StatusString
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = wheelStage2Time
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = "-"
-
 
     if len(wheelStage2StatusList) != 0:
         rsCEA['Summary1Display'] = statistics.mean(wheelStage2TimeList)
