@@ -2,9 +2,11 @@ import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 from analysisTypes.autonomous import autonomous
 from analysisTypes.lostComm import lostComm
+from analysisTypes.playedDefense import playedDefense
 from analysisTypes.startingPosition import startingPosition
 from analysisTypes.totalBalls import totalBalls
 from analysisTypes.totalScore import totalScore
+from analysisTypes.wheelStage2 import wheelStage2
 
 
 # Define a Class called analysis
@@ -103,6 +105,10 @@ class analysis():
                 rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
+                # playedDefense
+                rsCEA = playedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
                 # startingPosition
                 rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
@@ -113,6 +119,10 @@ class analysis():
 
                 # totalScore
                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # wheelStage2
+                rsCEA = wheelStage2(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
 
