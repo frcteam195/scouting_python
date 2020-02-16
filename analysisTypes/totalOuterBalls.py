@@ -1,10 +1,10 @@
 import statistics
-# ******************** AnalysisTypeID = 10 = Total Inner Balls *******************
+# ******************** AnalysisTypeID = 9 = Total Inner Balls *******************
 
-def totalBalls(analysis, rsRobotMatches):
+def totalOuterBalls(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 3
+    rsCEA['AnalysisTypeID'] = 9
     numberOfMatchesPlayed = 0
     totalHighBallsList = []
     totalBallsList = []

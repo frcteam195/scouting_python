@@ -5,8 +5,12 @@ from analysisTypes.lostComm import lostComm
 from analysisTypes.playedDefense import playedDefense
 from analysisTypes.startingPosition import startingPosition
 from analysisTypes.totalBalls import totalBalls
+from analysisTypes.totalInnerBalls import totalInnerBalls
+from analysisTypes.totalLowBalls import totalLowBalls
+from analysisTypes.totalOuterBalls import totalOuterBalls
 from analysisTypes.totalScore import totalScore
 from analysisTypes.wheelStage2 import wheelStage2
+from analysisTypes.wheelStage3 import wheelStage3
 
 
 # Define a Class called analysis
@@ -117,12 +121,28 @@ class analysis():
                 rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
+                # totalInnerBalls
+                rsCEA = totalInnerBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # totalLowBalls
+                rsCEA = totalLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # totalOuterBalls
+                rsCEA = totalOuterBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
                 # totalScore
                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 # wheelStage2
                 rsCEA = wheelStage2(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # wheelStage3
+                rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
 
