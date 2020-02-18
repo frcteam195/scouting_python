@@ -9,6 +9,7 @@ def hopperLoad(analysis, rsRobotMatches):
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 24
     numberOfMatchesPlayed = 0
+    hopperLoad = 0
     hopperLoadString = ''
     hopperLoadList = []
 
@@ -28,9 +29,9 @@ def hopperLoad(analysis, rsRobotMatches):
             if hopperLoad is None:
                 hopperLoad = 0
             elif hopperLoad == 0:
-                hopperLoadString = 'n'
+                hopperLoadString = 'No'
             else:
-                hopperLoadString = 'y'
+                hopperLoadString = 'Yes'
 
         # Perform some calculations
         numberOfMatchesPlayed += 1
