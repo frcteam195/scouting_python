@@ -9,10 +9,11 @@ def hopperLoad(analysis, rsRobotMatches):
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 24
     numberOfMatchesPlayed = 0
-    wheelStage3StatusList = []
-    wheelStage3TimeList = []
-    wheelStage3AttemptsList = []
+    hopperLoad = 0
+    hopperLoadString = ''
+    hopperLoadList = []
 
+    # Loop through each match the robot played in.
     for matchResults in rsRobotMatches:
         rsCEA['Team'] = matchResults[analysis.columns.index('Team')]
         rsCEA['EventID'] = matchResults[analysis.columns.index('EventID')]
@@ -24,4 +25,29 @@ def hopperLoad(analysis, rsRobotMatches):
         elif scoutingStatus == 2:
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
-            
+            hopperLoad = matchResults[analysis.columns.index('SummHopperLoad')]
+            if hopperLoad is None:
+                hopperLoad = 0
+            elif hopperLoad == 0:
+                hopperLoadString = 'No'
+            else:
+                hopperLoadString = 'Yes'
+
+        # Perform some calculations
+        numberOfMatchesPlayed += 1
+        hopperLoadList.append(hopperLoad)
+
+        # Create the rsCEA records for Display, Value, and Format
+        rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = hopperLoadString
+        rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = hopperLoad
+        if hopperLoad == 0:
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
+        else:
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
+
+    # Create summary data
+    if numberOfMatchesPlayed > 0:
+        # Summary1 is the % of matches where they lost Comm
+        rsCEA['Summary1Display'] = np.sum(hopperLoadList)/numberOfMatchesPlayed * 100
+
+    return rsCEA

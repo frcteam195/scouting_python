@@ -9,6 +9,7 @@ def wheelStage3(analysis, rsRobotMatches):
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 6
     numberOfMatchesPlayed = 0
+    wheelStage3Status = 0
     wheelStage3StatusList = []
     wheelStage3TimeList = []
     wheelStage3AttemptsList = []
@@ -45,22 +46,24 @@ def wheelStage3(analysis, rsRobotMatches):
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = "-"
 
+            if wheelStage3Status == 1:
+                if wheelStage3Time <= 5:
+                    rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
+                elif 5 < wheelStage3Time < 11:
+                    rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
+                elif 10 < wheelStage3Time < 16:
+                    rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
+                elif wheelStage3Time >= 16:
+                    rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
+            elif wheelStage3Attempts == 0:
+                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
+            else:
+                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
+
     # NOTE: All this needs to go above where the Display and Value records are created. It will not compile
     #       properly when the wheelStage3Status values can be evaluated without ensuring that it is acutally set
     #       This is fixed if this section is in the same level of the program and not one level higher.
-    # if wheelStage3Status == 1:
-    #     if wheelStage3Time <= 5:
-    #         rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
-    #     elif 5 < wheelStage3Time < 11:
-    #         rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
-    #     elif 10 < wheelStage3Time < 16:
-    #         rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
-    #     elif wheelStage3Time >= 16:
-    #         rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
-    # elif wheelStage3Attempts == 0:
-    #     rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
-    # else:
-    #     rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
+
 
     if len(wheelStage3StatusList) != 0:
         rsCEA['Summary1Display'] = statistics.mean(wheelStage3TimeList)

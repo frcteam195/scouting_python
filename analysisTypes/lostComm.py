@@ -36,7 +36,7 @@ def lostComm(analysis, rsRobotMatches):
             numberOfMatchesPlayed += 1
             lostCommList.append(lostComm)
 
-            # Create the rsCEA records for Dsiplay, Value, and Format
+            # Create the rsCEA records for Display, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = lostCommString
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = lostComm
             if lostComm == 0:
