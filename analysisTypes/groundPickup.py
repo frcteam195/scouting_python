@@ -3,7 +3,7 @@ import numpy as np
 def groundPickup(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 14
+    rsCEA['AnalysisTypeID'] = 23
     numberOfMatchesPlayed = 0
 
     lostCommList = []
