@@ -2,6 +2,7 @@ import mysql.connector as mariaDB
 import json
 import sys
 
+
 class dumpTable(object):
     def __init__(self, table):
         # Connection to AWS Testing database - use when you would destroy tables with proper data
@@ -16,12 +17,19 @@ class dumpTable(object):
                                     host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                     database='team195_scouting')
 
+        # Connection to raspberry pi database
+        #self.conn = mariaDB.connect(user='admin',
+        #                           passwd='team195',
+        #                           host='localhost',
+        #                           database='team195_scouting')
+
         self.cursor = self.conn.cursor()
-        while table == None:
+        while table is None:
             table = input("Enter table name ('?' for list of tables, 'q' to quit): ")
+            print(table)
             if len(table) == 0:
                 table = None
-            elif table == "?":
+            elif table == '?':
                 self._run_query("USE team195_scouting")
                 self._run_query("SHOW TABLES")
                 for row in self.cursor.fetchall():
@@ -29,13 +37,13 @@ class dumpTable(object):
                 table = None
             elif table.lower() == 'q':
                 return
-            
+
         self.dump(table)
 
-    def _run_query(self,query):
+    def _run_query(self, query):
         self.cursor.execute(query)
 
-    def dump(self,table):
+    def dump(self, table):
         self._run_query("SELECT * FROM team195_scouting." + table + ";")
         columns = [column[0] for column in self.cursor.description]
         print(columns)
@@ -46,6 +54,7 @@ class dumpTable(object):
         with open(table + '.json', 'w') as outfile:
             print(results)
             json.dump(results, outfile, sort_keys=True, indent=4, ensure_ascii=False)
+
 
 if __name__ == '__main__':
     table = None
