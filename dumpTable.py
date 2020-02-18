@@ -17,12 +17,19 @@ class dumpTable(object):
                                     host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                     database='team195_scouting')
 
+        # Connection to raspberry pi database
+        #self.conn = mariaDB.connect(user='admin',
+        #                           passwd='team195',
+        #                           host='localhost',
+        #                           database='team195_scouting')
+
         self.cursor = self.conn.cursor()
         while table is None:
             table = input("Enter table name ('?' for list of tables, 'q' to quit): ")
+            print(table)
             if len(table) == 0:
                 table = None
-            elif table == "?":
+            elif table == '?':
                 self._run_query("USE team195_scouting")
                 self._run_query("SHOW TABLES")
                 for row in self.cursor.fetchall():
