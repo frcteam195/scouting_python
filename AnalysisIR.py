@@ -1,6 +1,7 @@
 import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 from analysisTypes.autonomous import autonomous
+from analysisTypes.brokeDown import brokeDown
 from analysisTypes.lostComm import lostComm
 from analysisTypes.hopperLoad import hopperLoad
 from analysisTypes.playedDefense import playedDefense
@@ -106,6 +107,14 @@ class analysis():
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
+                # brokeDown
+                rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # hopperLoad
+                rsCEA = hopperLoad(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
                 # lostComm
                 rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
@@ -144,10 +153,6 @@ class analysis():
 
                 # wheelStage3
                 rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # hopperLoad
-                rsCEA = hopperLoad(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
     # Function to insert an rsCEA record into the DB.
