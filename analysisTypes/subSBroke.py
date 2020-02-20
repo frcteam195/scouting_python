@@ -30,7 +30,7 @@ def subSBroke(analysis, rsRobotMatches):
             if subSBroke == 0:
                 subSBrokeString = 'No'
             else:
-                subSBString = 'Yes'
+                subSBrokeString = 'Yes'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
