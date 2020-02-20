@@ -7,42 +7,36 @@ conn = mariaDB.connect(user='admin',
                        database='team195_scouting')
 cursor = conn.cursor()
 
+
 cursor.execute("SELECT Matches.* FROM Matches LEFT JOIN MatchScouting  "
-                "ON (Matches.EventID = MatchScouting.EventID) "
-                "AND Matches.MatchID = MatchScouting.MatchID "
-                "WHERE (((Matches.EventID) = 1) AND ((MatchScouting.MatchID) is Null));")
-columns = [column[0] for column in cursor.description]
-print()
-print(columns)
-print()
+               "ON (Matches.EventID = MatchScouting.EventID) "
+               "AND Matches.MatchID = MatchScouting.MatchID "
+               "WHERE (((Matches.EventID) = 1) AND ((MatchScouting.MatchID) is Null));")
+rsMatches = cursor.fetchall()
+print(rsMatches)
 
-#cursor.execute("SELECT * From Matches;")
-rsMatches = []
-# rsMatchScoutingRecords{}
-for row in cursor.fetchall():
-    i = 1
-    while i <= 6:
-        rsMatchScoutingRecord = {}
-        rsMatchScoutingRecord['MatchID'] = row[0]
-        rsMatchScoutingRecord['EventID'] = row[1]
-        rsMatchScoutingRecord['Team'] = row[i+2]
-        rsMatchScoutingRecord['AllianceStationID'] = i
-        print(rsMatchScoutingRecord)
-        items = rsMatchScoutingRecord.items()
-        columns = str(tuple([x[0] for x in items])).replace("'", "")
-        values = str(tuple([x[1] for x in items]))
-        cursor.execute("INSERT INTO MatchScouting "
-                       + columns + " VALUES "
-                       + values + ";")
-        conn.commit()
-        i+=1
 
-# items = rsCEA.items()
-# columns = str(tuple([x[0] for x in items])).replace("'", "")
-# values = str(tuple([x[1] for x in items]))
+cursor.execute("SELECT MatchScouting.Team FROM (MatchScouting "
+                "INNER JOIN Matches ON MatchScouting.MatchID = Matches.MatchID) "
+                "INNER JOIN Events ON Matches.EventID = Events.EventID "
+                "WHERE (((Events.CurrentEvent) = 1)) "
+                "GROUP BY CAST(MatchScouting.Team AS INT), MatchScouting.Team "
+                "HAVING (((MatchScouting.Team) Is Not Null)); ")
+rsTeams = cursor.fetchall()
+print(rsTeams)
+
+# for row in rsMatches:
+#     i = 1
+#     while i <= 6:
+#         rsMatchScoutingRecord = {'MatchID': row[0], 'EventID': row[1], 'Team': row[i + 2], 'AllianceStationID': i}
+#         print(rsMatchScoutingRecord)
+#         items = rsMatchScoutingRecord.items()
+#         columns = str(tuple([x[0] for x in items])).replace("'", "")
+#         values = str(tuple([x[1] for x in items]))
+#         cursor.execute("INSERT INTO MatchScouting "
+#                        + columns + " VALUES "
+#                        + values + ";")
+#         conn.commit()
+#         i += 1
 #
-# cursor.execute("INSERT INTO [Current Event Analysis] "
-#                + columns + " VALUES "
-#                + values + ";")
-# cursor.commit()
-
+#
