@@ -1,10 +1,24 @@
 import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
-from analysisTypes.startingPosition import startingPosition   # AnalysisType = 1
-from analysisTypes.autonomous import autonomous   # AnalysisType = 2
-from analysisTypes.lostComm import lostComm #Analysis Type = 20
-from analysisTypes.brokeDown import brokeDown #Analysis Type = 21
-from analysisTypes.climb import climb  # Analysis Type = 7
+from analysisTypes.autonomous import autonomous
+from analysisTypes.brokeDown import brokeDown
+from analysisTypes.climb import climb
+from analysisTypes.groundPickup import groundPickup
+from analysisTypes.hopperLoad import hopperLoad
+from analysisTypes.lostComm import lostComm
+# from analysisTypes.matchVideos import matchVideos
+from analysisTypes.playedDefense import playedDefense
+from analysisTypes.startingPosition import startingPosition
+from analysisTypes.subSBroke import subSBroke
+from analysisTypes.totalBalls import totalBalls
+from analysisTypes.totalInnerBalls import totalInnerBalls
+from analysisTypes.totalLowBalls import totalLowBalls
+from analysisTypes.totalOuterBalls import totalOuterBalls
+from analysisTypes.totalScore import totalScore
+from analysisTypes.wheelStage2 import wheelStage2
+from analysisTypes.wheelStage3 import wheelStage3
+
+from analysisTypes.startingPosition import startingPosition
 
 # Define a Class called analysis
 class analysis():
@@ -94,15 +108,55 @@ class analysis():
             rsRobotMatches = self._getTeamData(team)
 
             if rsRobotMatches:
-                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-                rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
+
                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
+
                 rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # rsCEA = groundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
+                # self._insertAnalysis(rsCEA)
+
+                rsCEA = hopperLoad(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                # rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
+                # self._insertAnalysis(rsCEA)
+
+                rsCEA = playedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = subSBroke(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = totalInnerBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = totalLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = totalOuterBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = wheelStage2(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
 

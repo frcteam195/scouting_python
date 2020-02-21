@@ -1,5 +1,5 @@
-import statistics
-# ******************** AnalysisTypeID = 70 = Match Videos *******************
+# import statistics
+
 
 def matchVideos(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop

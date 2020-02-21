@@ -1,7 +1,5 @@
-# import statistics
 import numpy as np
 
-# ******************** AnalysisTypeID = 25 = Did They Play Defense *******************
 
 def playedDefense(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
@@ -42,7 +40,7 @@ def playedDefense(analysis, rsRobotMatches):
 
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they lost Comm
-        print(playedDefenseList)
+        # print(playedDefenseList)
         rsCEA['Summary1Display'] = np.sum(playedDefenseList) / numberOfMatchesPlayed * 100
 
     return rsCEA

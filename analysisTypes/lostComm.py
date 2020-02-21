@@ -1,13 +1,10 @@
-import statistics
 import numpy as np
 
-# ******************** AnalysisTypeID = 9 = lostComm *******************
 
 def lostComm(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 20
-    rsCEA['AnalysisTypeID'] = 17
     numberOfMatchesPlayed = 0
 
     lostCommList = []
@@ -48,6 +45,6 @@ def lostComm(analysis, rsRobotMatches):
     # Create summary data
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they lost Comm
-        rsCEA['Summary1Display'] = np.sum(lostCommList)/numberOfMatchesPlayed*100
+        rsCEA['Summary1Display'] = np.sum(lostCommList) / numberOfMatchesPlayed * 100
 
     return rsCEA

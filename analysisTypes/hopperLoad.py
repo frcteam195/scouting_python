@@ -1,8 +1,5 @@
-import statistics
 import numpy as np
 
-
-# ******************** AnalysisTypeID = 24 = Hopper Load *******************
 
 def hopperLoad(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop

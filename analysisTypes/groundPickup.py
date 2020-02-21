@@ -1,14 +1,13 @@
 import numpy as np
 
+
 def groundPickup(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 23
     numberOfMatchesPlayed = 0
 
-    lostCommList = []
-    groundPickup = 0
-    groundPickupString = ''
+    groundPickupList  = []
 
     # Loop through each match the robot played in.
     for matchResults in rsRobotMatches:
@@ -33,7 +32,7 @@ def groundPickup(analysis, rsRobotMatches):
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            groundPickup.append(groundPickup)
+            groundPickupList.append(groundPickup)
 
             # Create the rsCEA records for Display, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = groundPickupString
@@ -43,10 +42,10 @@ def groundPickup(analysis, rsRobotMatches):
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
 
-    # Create summary data
+        # Create summary data
 
-        if numberOfMatchesPlayed > 0:
-            # Summary1 is the % of matches where they lost Comm
-            rsCEA['Summary1Display'] = np.sum(groundPickup) / numberOfMatchesPlayed * 100
+    if numberOfMatchesPlayed > 0:
+        # Summary1 is the % of matches where they lost Comm
+        rsCEA['Summary1Display'] = np.sum(groundPickupList) / numberOfMatchesPlayed * 100
 
     return rsCEA
