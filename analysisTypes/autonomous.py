@@ -1,9 +1,14 @@
 import statistics
-import numpy as np
+# import time
+
+
+# import numpy as np
 
 # ******************** AnalysisTypeID = 2 = autonomous *******************
 
 def autonomous(analysis, rsRobotMatches):
+    # start = time.time()
+    # print("autonomous time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 2
@@ -52,7 +57,8 @@ def autonomous(analysis, rsRobotMatches):
             totalBallsList.append(autoBallLow + autoBallOuter + autoBallInner)
 
             # Create the rsCEA records for Dsiplay, Value, and Format
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(totalBalls) + "|" + str(totalHighBalls) + autoPenaltyString
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
+                str(totalBalls) + "|" + str(totalHighBalls) + autoPenaltyString
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalBalls
             if totalBalls > 3:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
@@ -79,5 +85,8 @@ def autonomous(analysis, rsRobotMatches):
         #print(max(totalBallsList))
         #testList = [22, 33, 44, 23, 43, 56, 43, 56, 76, 99, 23, 1, 109, 34, 76, 89, 99, 23, 55]
         #print(np.quantile(testList, 0.25))
+
+    # end = time.time()
+    # print(end - start)
 
     return rsCEA
