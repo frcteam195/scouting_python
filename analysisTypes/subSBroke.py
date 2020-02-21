@@ -1,7 +1,7 @@
 import statistics
 import numpy as np
 
-# ******************** AnalysisTypeID = 9 = lostComm *******************
+# ******************** AnalysisTypeID = 21 = SubSystem Broke *******************
 
 def subSBroke(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop

@@ -4,6 +4,7 @@ from analysisTypes.startingPosition import startingPosition   # AnalysisType = 1
 from analysisTypes.autonomous import autonomous   # AnalysisType = 2
 from analysisTypes.lostComm import lostComm #Analysis Type = 20
 from analysisTypes.brokeDown import brokeDown #Analysis Type = 21
+from analysisTypes.climb import climb  # Analysis Type = 7
 
 # Define a Class called analysis
 class analysis():
@@ -100,6 +101,8 @@ class analysis():
                 rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
 
