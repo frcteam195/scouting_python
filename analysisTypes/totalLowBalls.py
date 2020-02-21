@@ -1,5 +1,5 @@
 import statistics
-# ******************** AnalysisTypeID = 8 = Total Low Balls *******************
+
 
 def totalLowBalls(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
@@ -68,9 +68,9 @@ def totalLowBalls(analysis, rsRobotMatches):
             # Perform some calculations
             numberOfMatchesPlayed += 1
             totalHighBalls = (TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
-                             TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
-                             TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
-                             TeleBallInnerZone5)
+                              TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
+                              TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
+                              TeleBallInnerZone5)
             totalBalls = totalHighBalls + TeleBallLowZone1
             totalHighBallsList.append(TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
                                       TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
@@ -92,7 +92,7 @@ def totalLowBalls(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
             elif 9 <= totalBalls >= 1:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
-            else :
+            else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if numberOfMatchesPlayed > 0:

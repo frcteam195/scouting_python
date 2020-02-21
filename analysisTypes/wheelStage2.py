@@ -1,7 +1,6 @@
 import statistics
 import numpy as np
 
-# ******************** AnalysisTypeID = 5 = Wheel - Stage 2 *******************
 
 def wheelStage2(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
@@ -34,7 +33,7 @@ def wheelStage2(analysis, rsRobotMatches):
 
                 wheelStage2Time = matchResults[analysis.columns.index('TeleWheelStage2Time')]
                 if wheelStage2Time is None:
-                    wheelStage2Time = 999 # That should never happen - leaving the 999 in to show if there is an issue
+                    wheelStage2Time = 999  # That should never happen - leaving the 999 in to show if there is an issue
                 wheelStage2TimeList.append(wheelStage2Time)
 
                 wheelStage2AttemptsList.append(wheelStage2Attempts)
@@ -51,8 +50,8 @@ def wheelStage2(analysis, rsRobotMatches):
         rsCEA['Summary1Value'] = statistics.mean(wheelStage2TimeList)
         rsCEA['Summary2Display'] = statistics.median(wheelStage2TimeList)
         rsCEA['Summary2Value'] = statistics.median(wheelStage2TimeList)
-        rsCEA['Summary3Display'] = np.sum(wheelStage2StatusList)/len(wheelStage2StatusList)*100
-        rsCEA['Summary3Value'] = np.sum(wheelStage2StatusList)/len(wheelStage2StatusList)*100
+        rsCEA['Summary3Display'] = np.sum(wheelStage2StatusList) / len(wheelStage2StatusList) * 100
+        rsCEA['Summary3Value'] = np.sum(wheelStage2StatusList) / len(wheelStage2StatusList) * 100
         # NEED TO ADD SOME COLORS
 
     return rsCEA

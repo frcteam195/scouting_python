@@ -2,8 +2,6 @@ import statistics
 import numpy as np
 
 
-# ******************** AnalysisTypeID = 6 = Wheel - Stage 3 *******************
-
 def wheelStage3(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}

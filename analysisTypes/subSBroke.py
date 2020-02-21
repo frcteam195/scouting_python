@@ -1,12 +1,10 @@
-import statistics
 import numpy as np
 
-# ******************** AnalysisTypeID = 21 = SubSystem Broke *******************
 
 def subSBroke(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 21
+    rsCEA['AnalysisTypeID'] = 22
     numberOfMatchesPlayed = 0
 
     subSBrokeList = []
@@ -24,7 +22,7 @@ def subSBroke(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             # Retrieve values from the matchResults and set to appropriate variables
-            subSBroke = matchResults[analysis.columns.index('SummsubSBroke')]
+            subSBroke = matchResults[analysis.columns.index('SummSubSystemBroke')]
             if subSBroke is None:
                 subSBroke = 0
             if subSBroke == 0:
@@ -47,6 +45,6 @@ def subSBroke(analysis, rsRobotMatches):
     # Create summary data
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they lost Comm
-        rsCEA['Summary1Display'] = np.sum(subSBrokeList)/numberOfMatchesPlayed*100
+        rsCEA['Summary1Display'] = np.sum(subSBrokeList) / numberOfMatchesPlayed * 100
 
     return rsCEA
