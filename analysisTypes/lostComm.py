@@ -1,12 +1,13 @@
 import statistics
 import numpy as np
 
-# ******************** AnalysisTypeID = 20 = lostComm *******************
+# ******************** AnalysisTypeID = 9 = lostComm *******************
 
 def lostComm(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 20
+    rsCEA['AnalysisTypeID'] = 17
     numberOfMatchesPlayed = 0
 
     lostCommList = []
@@ -36,7 +37,7 @@ def lostComm(analysis, rsRobotMatches):
             numberOfMatchesPlayed += 1
             lostCommList.append(lostComm)
 
-            # Create the rsCEA records for Display, Value, and Format
+            # Create the rsCEA records for Dsiplay, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = lostCommString
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = lostComm
             if lostComm == 0:

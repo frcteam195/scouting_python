@@ -1,15 +1,14 @@
-import statistics
 import numpy as np
 
-# ******************** AnalysisTypeID = 9 = lostComm *******************
-
-def brokeDown(analysis, rsRobotMatches):
+def groundPickup(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 21
+    rsCEA['AnalysisTypeID'] = 23
     numberOfMatchesPlayed = 0
 
-    brokeDownList = []
+    lostCommList = []
+    groundPickup = 0
+    groundPickupString = ''
 
     # Loop through each match the robot played in.
     for matchResults in rsRobotMatches:
@@ -24,29 +23,30 @@ def brokeDown(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             # Retrieve values from the matchResults and set to appropriate variables
-            brokeDown = matchResults[analysis.columns.index('SummLostComm')]
-            if brokeDown is None:
-                brokeDown = 0
-            if brokeDown == 0:
-                brokeDownString = 'No'
+            groundPickup = [analysis.columns.index('SummGroundPickup')]
+            if groundPickup is None:
+                groundPickup = 0
+            if groundPickup == 0:
+                groundPickupString = 'No'
             else:
-                brokeDownString = 'Yes'
+                groundPickupString = 'Yes'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            brokeDownList.append(brokeDown)
+            groundPickup.append(groundPickup)
 
-            # Create the rsCEA records for Dsiplay, Value, and Format
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = brokeDownString
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = brokeDown
-            if brokeDown == 0:
+            # Create the rsCEA records for Display, Value, and Format
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = groundPickupString
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = groundPickup
+            if groundPickup == 0:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
 
     # Create summary data
-    if numberOfMatchesPlayed > 0:
-        # Summary1 is the % of matches where they lost Comm
-        rsCEA['Summary1Display'] = np.sum(brokeDownList)/numberOfMatchesPlayed*100
+
+        if numberOfMatchesPlayed > 0:
+            # Summary1 is the % of matches where they lost Comm
+            rsCEA['Summary1Display'] = np.sum(groundPickup) / numberOfMatchesPlayed * 100
 
     return rsCEA

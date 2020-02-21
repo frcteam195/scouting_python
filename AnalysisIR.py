@@ -1,19 +1,9 @@
 import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
-from analysisTypes.autonomous import autonomous
-from analysisTypes.brokeDown import brokeDown
-from analysisTypes.lostComm import lostComm
-from analysisTypes.hopperLoad import hopperLoad
-from analysisTypes.playedDefense import playedDefense
-from analysisTypes.startingPosition import startingPosition
-from analysisTypes.totalBalls import totalBalls
-from analysisTypes.totalInnerBalls import totalInnerBalls
-from analysisTypes.totalLowBalls import totalLowBalls
-from analysisTypes.totalOuterBalls import totalOuterBalls
-from analysisTypes.totalScore import totalScore
-from analysisTypes.wheelStage2 import wheelStage2
-from analysisTypes.wheelStage3 import wheelStage3
-
+from analysisTypes.startingPosition import startingPosition   # AnalysisType = 1
+from analysisTypes.autonomous import autonomous   # AnalysisType = 2
+from analysisTypes.lostComm import lostComm #Analysis Type = 20
+from analysisTypes.brokeDown import brokeDown #Analysis Type = 21
 
 # Define a Class called analysis
 class analysis():
@@ -103,57 +93,15 @@ class analysis():
             rsRobotMatches = self._getTeamData(team)
 
             if rsRobotMatches:
-                # autonomous
+                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-
-                # brokeDown
+                rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-                # hopperLoad
-                rsCEA = hopperLoad(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # lostComm
-                rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # playedDefense
-                rsCEA = playedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # startingPosition
-                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # totalBalls
-                rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # totalInnerBalls
-                rsCEA = totalInnerBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # totalLowBalls
-                rsCEA = totalLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # totalOuterBalls
-                rsCEA = totalOuterBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # totalScore
-                rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # wheelStage2
-                rsCEA = wheelStage2(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # wheelStage3
-                rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
 
     # Function to insert an rsCEA record into the DB.
     def _insertAnalysis(self, rsCEA):
