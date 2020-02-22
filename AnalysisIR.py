@@ -1,12 +1,13 @@
 import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 from analysisTypes.autonomous import autonomous
+from analysisTypes.ballSummary import ballSummary
 from analysisTypes.brokeDown import brokeDown
 from analysisTypes.climb import climb
 from analysisTypes.groundPickup import groundPickup
 from analysisTypes.hopperLoad import hopperLoad
 from analysisTypes.lostComm import lostComm
-# from analysisTypes.matchVideos import matchVideos
+from analysisTypes.matchVideos import matchVideos
 from analysisTypes.playedDefense import playedDefense
 from analysisTypes.startingPosition import startingPosition
 from analysisTypes.subSBroke import subSBroke
@@ -111,6 +112,9 @@ class analysis():
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
+                rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
@@ -126,8 +130,8 @@ class analysis():
                 rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-                # rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
-                # self._insertAnalysis(rsCEA)
+                rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 
                 rsCEA = playedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
