@@ -1,10 +1,5 @@
 import statistics
-# import time
 
-
-# import numpy as np
-
-# ******************** AnalysisTypeID = 2 = autonomous *******************
 
 def autonomous(analysis, rsRobotMatches):
     # start = time.time()
