@@ -22,7 +22,7 @@ def groundPickup(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             # Retrieve values from the matchResults and set to appropriate variables
-            groundPickup = [analysis.columns.index('SummGroundPickup')]
+            groundPickup = matchResults[analysis.columns.index('SummGroundPickup')]
             if groundPickup is None:
                 groundPickup = 0
             if groundPickup == 0:
@@ -34,7 +34,7 @@ def groundPickup(analysis, rsRobotMatches):
             numberOfMatchesPlayed += 1
             groundPickupList.append(groundPickup)
 
-            # Create the rsCEA records for Display, Value, and Format
+            # Create the rsCEA records for Dsiplay, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = groundPickupString
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = groundPickup
             if groundPickup == 0:
@@ -42,10 +42,10 @@ def groundPickup(analysis, rsRobotMatches):
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
 
-        # Create summary data
 
+    # Create summary data
     if numberOfMatchesPlayed > 0:
-        # Summary1 is the % of matches where they lost Comm
+        # Summary1 is the % of matches where they performed a Ground Pickup
         rsCEA['Summary1Display'] = np.sum(groundPickupList) / numberOfMatchesPlayed * 100
 
     return rsCEA

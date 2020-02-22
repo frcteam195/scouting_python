@@ -30,3 +30,5 @@ def readComputer(id, name, typeID, connectionStatus, stationID):
     print(x)
 
 readComputer(1, "Junk", 0, 0, 2)
+
+# test
