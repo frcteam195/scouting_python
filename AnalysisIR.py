@@ -1,6 +1,7 @@
 import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 from analysisTypes.autonomous import autonomous
+from analysisTypes.ballSummary import ballSummary
 from analysisTypes.brokeDown import brokeDown
 from analysisTypes.climb import climb
 from analysisTypes.groundPickup import groundPickup
@@ -109,6 +110,9 @@ class analysis():
 
             if rsRobotMatches:
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
