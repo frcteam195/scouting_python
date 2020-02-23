@@ -33,16 +33,16 @@ def totalScore(analysis, rsRobotMatches):
             # Identify the various different types of scoring
             if matchResults[analysis.columns.index('AutoMoveBonus')] == 1:
                 autoMoveBonus = 1
-            autoBallsLow = matchResults[analysis.columns.index('AutoBallLow')]
 
+            autoBallsLow = matchResults[analysis.columns.index('AutoBallLow')]
             if autoBallsLow is None:
                 autoBallsLow = 0
-            autoBallsOuter = matchResults[analysis.columns.index('AutoBallOuter')]
 
+            autoBallsOuter = matchResults[analysis.columns.index('AutoBallOuter')]
             if autoBallsOuter is None:
                 autoBallsOuter = 0
-            autoBallsInner = matchResults[analysis.columns.index('AutoBallInner')]
 
+            autoBallsInner = matchResults[analysis.columns.index('AutoBallInner')]
             if autoBallsInner is None:
                 autoBallsOuter = 0
 

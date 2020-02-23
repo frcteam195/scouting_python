@@ -15,7 +15,21 @@ cursor.execute("SELECT Matches.* FROM Matches LEFT JOIN MatchScouting  "
 rsMatches = cursor.fetchall()
 print(rsMatches)
 
+for row in rsMatches:
+    i = 1
+    while i <= 6:
+        rsMatchScoutingRecord = {'MatchID': row[0], 'EventID': row[1], 'Team': row[i + 2], 'AllianceStationID': i}
+        print(rsMatchScoutingRecord)
+        items = rsMatchScoutingRecord.items()
+        columns = str(tuple([x[0] for x in items])).replace("'", "")
+        values = str(tuple([x[1] for x in items]))
+        cursor.execute("INSERT INTO MatchScouting "
+                       + columns + " VALUES "
+                       + values + ";")
+        conn.commit()
+        i += 1
 
+# fix team match numbers
 cursor.execute("SELECT MatchScouting.Team FROM (MatchScouting "
                 "INNER JOIN Matches ON MatchScouting.MatchID = Matches.MatchID) "
                 "INNER JOIN Events ON Matches.EventID = Events.EventID "
@@ -25,18 +39,6 @@ cursor.execute("SELECT MatchScouting.Team FROM (MatchScouting "
 rsTeams = cursor.fetchall()
 print(rsTeams)
 
-# for row in rsMatches:
-#     i = 1
-#     while i <= 6:
-#         rsMatchScoutingRecord = {'MatchID': row[0], 'EventID': row[1], 'Team': row[i + 2], 'AllianceStationID': i}
-#         print(rsMatchScoutingRecord)
-#         items = rsMatchScoutingRecord.items()
-#         columns = str(tuple([x[0] for x in items])).replace("'", "")
-#         values = str(tuple([x[1] for x in items]))
-#         cursor.execute("INSERT INTO MatchScouting "
-#                        + columns + " VALUES "
-#                        + values + ";")
-#         conn.commit()
-#         i += 1
-#
-#
+for team in rsTeams:
+    i = 1
+    cursor.execute("SELECT ")
