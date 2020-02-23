@@ -21,6 +21,18 @@ def totalInnerBalls(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             # Retrieve values from the matchResults and set to appropriate variables
+            AutoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
+            if AutoBallLow is None:
+                AutoBallLow = 0
+
+            AutoBallInner = matchResults[analysis.columns.index('AutoBallInner')]
+            if AutoBallInner is None:
+                AutoBallInner = 0
+
+            AutoBallOuter = matchResults[analysis.columns.index('AutoBallOuter')]
+            if AutoBallOuter is None:
+                AutoBallOuter = 0
+
             TeleBallLowZone1 = matchResults[analysis.columns.index('TeleBallLowZone1')]
             if TeleBallLowZone1 is None:
                 TeleBallLowZone1 = 0
@@ -70,9 +82,10 @@ def totalInnerBalls(analysis, rsRobotMatches):
             totalBalls = (TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
                           TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
                           TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
-                          TeleBallInnerZone5 + TeleBallLowZone1)
+                          TeleBallInnerZone5 + TeleBallLowZone1 + AutoBallLow +
+                          AutoBallOuter + AutoBallInner)
             totalInnerBalls = (TeleBallInnerZone1 + TeleBallInnerZone2 + TeleBallInnerZone3 +
-                               TeleBallInnerZone4 + TeleBallInnerZone5)
+                               TeleBallInnerZone4 + TeleBallInnerZone5 + AutoBallInner)
             totalInnerBallsList.append(totalInnerBalls)
             totalBallsList.append(totalBalls)
 
