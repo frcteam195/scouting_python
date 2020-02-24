@@ -108,7 +108,9 @@ class analysis():
     def _analyzeTeams(self):
         # Loop over the # of teams and run each of the analysis functions calling _insertAnalysis after each one is run
         for team in self.rsRobots:
+            # print(team)
             rsRobotMatches = self._getTeamData(team)
+            # print(rsRobotMatches)
 
             if rsRobotMatches:
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
@@ -181,6 +183,7 @@ class analysis():
         self._run_query("INSERT INTO CurrentEventAnalysis "
                         + columnHeadings + " VALUES "
                         + values + ";")
+        # print(columnHeadings + values)
         self.conn.commit()
 
 
