@@ -29,6 +29,8 @@ def climb(analysis, rsRobotMatches):
             ClimbStatus = matchResults[analysis.columns.index('ClimbStatus')]
             if ClimbStatus is None:
                 ClimbPoints = 0
+            elif ClimbStatus == 0:
+                ClimbPoints = 0
             elif ClimbStatus == 1:
                 ClimbPoints = 0
             elif ClimbStatus == 2:
@@ -50,6 +52,8 @@ def climb(analysis, rsRobotMatches):
                 ClimbLevelPoints = 15
 
             RobotWeight = matchResults[analysis.columns.index('RobotWeight')]
+            if RobotWeight is None:
+                RobotWeight = 999
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
