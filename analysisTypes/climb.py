@@ -1,8 +1,6 @@
 import statistics
 
 
-# ******************** AnalysisTypeID = 7 = Climb *******************
-
 def climb(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
@@ -26,34 +24,52 @@ def climb(analysis, rsRobotMatches):
                 ClimbMoveOnBarString = "*"
             else:
                 ClimbMoveOnBarString = ""
+
+            # Status values: 1=no attempt, 2=success, 3=fail, 4=busy, 5=parked
             ClimbStatus = matchResults[analysis.columns.index('ClimbStatus')]
             if ClimbStatus is None:
-                ClimbStatus = 0
-            ClimbHeight = matchResults[analysis.columns.index('ClimbHeight')]
-            if ClimbHeight is None:
-                ClimbHeight = 0
-            ClimbPosition = matchResults[analysis.columns.index('ClimbPosition')]
-            if ClimbPosition is None:
-                ClimbPosition = 0
+                ClimbPoints = 0
+            elif ClimbStatus == 0:
+                ClimbPoints = 0
+            elif ClimbStatus == 1:
+                ClimbPoints = 0
+            elif ClimbStatus == 2:
+                ClimbPoints = 25
+            elif ClimbStatus == 3 or 4:
+                ClimbPoints = 0
+            elif ClimbStatus == 5:
+                ClimbPoints = 5
+            else:
+                ClimbPoints = 0
+
             ClimbLevelStatus = matchResults[analysis.columns.index('ClimbLevelStatus')]
             if ClimbLevelStatus is None:
                 ClimbLevelStatus = 0
 
+            if ClimbLevelStatus == 0:
+                ClimbLevelPoints = 0
+            else:
+                ClimbLevelPoints = 15
+
+            RobotWeight = matchResults[analysis.columns.index('RobotWeight')]
+            if RobotWeight is None:
+                RobotWeight = 999
+
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            totalClimbPoints = ClimbStatus + ClimbHeight + ClimbPosition + ClimbLevelStatus
-            totalClimbPointsList.append(ClimbStatus + ClimbHeight + ClimbPosition + ClimbLevelStatus)
+            totalClimbPoints = ClimbPoints + ClimbLevelPoints
+            totalClimbPointsList.append(totalClimbPoints)
 
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
                 str(totalClimbPoints) + str(ClimbMoveOnBarString)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalClimbPoints
-            if totalClimbPoints >= 40:
+            if totalClimbPoints == 40 and ClimbMoveOnBar == 1:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
-            elif 39 <= totalClimbPoints >= 30:
+            elif totalClimbPoints == 40 and ClimbMoveOnBar != 1:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
-            elif 29 <= totalClimbPoints >= 20:
+            elif totalClimbPoints == 25:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
-            elif 19 <= totalClimbPoints >= 5:
+            elif totalClimbPoints == 5:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
@@ -63,7 +79,8 @@ def climb(analysis, rsRobotMatches):
         rsCEA['Summary1Value'] = statistics.mean(totalClimbPointsList)
         rsCEA['Summary2Display'] = statistics.median(totalClimbPointsList)
         rsCEA['Summary2Value'] = statistics.median(totalClimbPointsList)
-        rsCEA['Summary3Display'] = statistics.mean(totalClimbPointsList)
-        rsCEA['Summary3Value'] = statistics.mean(totalClimbPointsList)
+        # 3 is rank
+        rsCEA['Summary4Display'] = RobotWeight
+        rsCEA['Summary4Value'] = RobotWeight
 
     return rsCEA

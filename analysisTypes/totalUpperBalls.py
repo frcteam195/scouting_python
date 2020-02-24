@@ -1,13 +1,13 @@
 import statistics
 
 
-def totalBalls(analysis, rsRobotMatches):
+def totalUpperBalls(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 3
+    rsCEA['AnalysisTypeID'] = 11
     numberOfMatchesPlayed = 0
     totalUpperBallsList = []
-    totalBallsList = []
+    totalBallList = []
 
     for matchResults in rsRobotMatches:
         rsCEA['Team'] = matchResults[analysis.columns.index('Team')]
@@ -82,14 +82,14 @@ def totalBalls(analysis, rsRobotMatches):
             totalUpperBalls = (TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
                               TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
                               TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
-                              TeleBallInnerZone5 + AutoBallInner + AutoBallOuter)
-            totalBalls = totalUpperBalls + TeleBallLowZone1 + AutoBallLow
+                              TeleBallInnerZone5 + AutoBallOuter + AutoBallInner)
             totalUpperBallsList.append(totalUpperBalls)
-            totalBallsList.append(totalBalls)
+            totalBalls = totalUpperBalls + TeleBallLowZone1 + AutoBallLow
+            totalBallList.append(totalBalls)
 
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                str(totalBalls) + "|" + str(totalUpperBalls)
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalBalls
+                str(totalUpperBalls) + "|" + str(totalBalls)
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalUpperBalls
             if totalBalls >= 30:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
             elif 29 <= totalBalls >= 20:
@@ -102,12 +102,12 @@ def totalBalls(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = statistics.mean(totalBallsList)
-        rsCEA['Summary1Value'] = statistics.mean(totalBallsList)
-        rsCEA['Summary2Display'] = statistics.median(totalBallsList)
-        rsCEA['Summary2Value'] = statistics.median(totalBallsList)
-        # 3 is for rank
-        rsCEA['Summary4Display'] = statistics.mean(totalUpperBallsList)
-        rsCEA['Summary4Value'] = statistics.mean(totalUpperBallsList)
+        rsCEA['Summary1Display'] = statistics.mean(totalUpperBallsList)
+        rsCEA['Summary1Value'] = statistics.mean(totalUpperBallsList)
+        rsCEA['Summary2Display'] = statistics.median(totalUpperBallsList)
+        rsCEA['Summary2Value'] = statistics.median(totalUpperBallsList)
+        # 3 will be for rank
+        rsCEA['Summary4Display'] = statistics.mean(totalBallList)
+        rsCEA['Summary4Value'] = statistics.mean(totalBallList)
 
     return rsCEA

@@ -73,25 +73,25 @@ def ballSummary(analysis, rsRobotMatches):
             if TeleBallInnerZone5 is None:
                 TeleBallInnerZone5 = 0
 
-            NoClimbPos1 = 0
+            NumClimbPos1 = 0
             if matchResults[analysis.columns.index('ClimbPosition')] == 1:
-                NoClimbPos1 += 1
+                NumClimbPos1 += 1
 
-            NoClimbPos2 = 0
+            NumClimbPos2 = 0
             if matchResults[analysis.columns.index('ClimbPosition')] == 2:
-                NoClimbPos2 += 1
+                NumClimbPos2 += 1
 
-            NoClimbPos3 = 0
+            NumClimbPos3 = 0
             if matchResults[analysis.columns.index('ClimbPosition')] == 3:
-                NoClimbPos3 += 1
+                NumClimbPos3 += 1
 
-            NoClimbPos4 = 0
+            NumClimbPos4 = 0
             if matchResults[analysis.columns.index('ClimbPosition')] == 4:
-                NoClimbPos4 += 1
+                NumClimbPos4 += 1
 
-            NoClimbPos5 = 0
+            NumClimbPos5 = 0
             if matchResults[analysis.columns.index('ClimbPosition')] == 5:
-                NoClimbPos5 += 1
+                NumClimbPos5 += 1
 
             # Perform some calculations
             totalBallsZone1 = (TeleBallLowZone1 + TeleBallOuterZone1 + TeleBallInnerZone1)
@@ -99,15 +99,16 @@ def ballSummary(analysis, rsRobotMatches):
             totalBallsZone3 = (TeleBallOuterZone3 + TeleBallInnerZone3)
             totalBallsZone4 = (TeleBallOuterZone4 + TeleBallInnerZone4)
             totalBallsZone5 = (TeleBallOuterZone5 + TeleBallInnerZone5)
+            
             totalBallsLow = AutoBallsLow + TeleBallLowZone1
+            
             totalBallsOuter = (TeleBallOuterZone1 + TeleBallOuterZone2 + TeleBallOuterZone3 + TeleBallOuterZone4 +
-                               TeleBallOuterZone5)
+                               TeleBallOuterZone5 + AutoBallsOuter)
+            
             totalBallsInner = (TeleBallInnerZone1 + TeleBallInnerZone2 + TeleBallInnerZone3 + TeleBallInnerZone4 +
-                               TeleBallInnerZone5)
-            totalBallsHigh = (TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
-                              TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
-                              TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
-                              TeleBallInnerZone5)
+                               TeleBallInnerZone5 + AutoBallsInner)
+            
+            totalBallsHigh = (totalBallsOuter + totalBallsInner)
             totalBalls = totalBallsHigh + totalBallsLow
 
             # Set Table Rows (Hijacked Format From Other CEA Rows)
@@ -141,19 +142,19 @@ def ballSummary(analysis, rsRobotMatches):
             rsCEA['Match10Display'] = totalBalls
             rsCEA['Match10Value'] = totalBalls
 
-            rsCEA['Match11Display'] = NoClimbPos1
-            rsCEA['Match11Value'] = NoClimbPos1
+            rsCEA['Match11Display'] = NumClimbPos1
+            rsCEA['Match11Value'] = NumClimbPos1
 
-            rsCEA['Match12Display'] = NoClimbPos2
-            rsCEA['Match12Value'] = NoClimbPos2
+            rsCEA['Match12Display'] = NumClimbPos2
+            rsCEA['Match12Value'] = NumClimbPos2
 
-            rsCEA['Summary1Display'] = NoClimbPos3
-            rsCEA['Summary1Value'] = NoClimbPos3
+            rsCEA['Summary1Display'] = NumClimbPos3
+            rsCEA['Summary1Value'] = NumClimbPos3
 
-            rsCEA['Summary2Display'] = NoClimbPos4
-            rsCEA['Summary2Value'] = NoClimbPos4
+            rsCEA['Summary2Display'] = NumClimbPos4
+            rsCEA['Summary2Value'] = NumClimbPos4
 
-            rsCEA['Summary3Display'] = NoClimbPos5
-            rsCEA['Summary3Value'] = NoClimbPos5
+            rsCEA['Summary3Display'] = NumClimbPos5
+            rsCEA['Summary3Value'] = NumClimbPos5
 
     return rsCEA

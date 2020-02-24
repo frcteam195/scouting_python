@@ -6,7 +6,7 @@ def totalOuterBalls(analysis, rsRobotMatches):
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 9
     numberOfMatchesPlayed = 0
-    totalHighBallsList = []
+    totalOuterBallsList = []
     totalBallsList = []
 
     for matchResults in rsRobotMatches:
@@ -21,6 +21,18 @@ def totalOuterBalls(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             # Retrieve values from the matchResults and set to appropriate variables
+            AutoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
+            if AutoBallLow is None:
+                AutoBallLow = 0
+
+            AutoBallInner = matchResults[analysis.columns.index('AutoBallInner')]
+            if AutoBallInner is None:
+                AutoBallInner = 0
+
+            AutoBallOuter = matchResults[analysis.columns.index('AutoBallOuter')]
+            if AutoBallOuter is None:
+                AutoBallOuter = 0
+
             TeleBallLowZone1 = matchResults[analysis.columns.index('TeleBallLowZone1')]
             if TeleBallLowZone1 is None:
                 TeleBallLowZone1 = 0
@@ -67,24 +79,17 @@ def totalOuterBalls(analysis, rsRobotMatches):
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            totalHighBalls = (TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
-                              TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
-                              TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
-                              TeleBallInnerZone5)
-            totalBalls = totalHighBalls + TeleBallLowZone1
-            totalHighBallsList.append(TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
-                                      TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
-                                      TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
-                                      TeleBallInnerZone5)
-            totalBallsList.append(TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
-                                  TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
-                                  TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
-                                  TeleBallInnerZone5 + TeleBallLowZone1)
+            totalBalls = (TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
+                          TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
+                          TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
+                          TeleBallInnerZone5 + AutoBallLow + AutoBallInner + AutoBallOuter)
+            totalOuterBalls = (TeleBallOuterZone1 + TeleBallOuterZone2 + TeleBallOuterZone3 +
+                               TeleBallOuterZone4 + TeleBallOuterZone5 + AutoBallOuter)
+            totalOuterBallsList.append(totalOuterBalls)
+            totalBallsList.append(totalBalls)
 
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                str((
-                                TeleBallOuterZone1 + TeleBallOuterZone2 + TeleBallOuterZone3 + TeleBallOuterZone4 + TeleBallOuterZone5)) + "|" + str(
-                    totalBalls)
+                str(totalOuterBalls) + "|" + str(totalBalls)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalBalls
             if totalBalls >= 30:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
@@ -98,11 +103,12 @@ def totalOuterBalls(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = statistics.mean(totalBallsList)
-        rsCEA['Summary1Value'] = statistics.mean(totalBallsList)
-        rsCEA['Summary2Display'] = statistics.median(totalBallsList)
-        rsCEA['Summary2Value'] = statistics.median(totalBallsList)
-        rsCEA['Summary3Display'] = statistics.mean(totalHighBallsList)
-        rsCEA['Summary3Value'] = statistics.mean(totalHighBallsList)
+        rsCEA['Summary1Display'] = statistics.mean(totalOuterBallsList)
+        rsCEA['Summary1Value'] = statistics.mean(totalOuterBallsList)
+        rsCEA['Summary2Display'] = statistics.median(totalOuterBallsList)
+        rsCEA['Summary2Value'] = statistics.median(totalOuterBallsList)
+        # 3 is for rank
+        rsCEA['Summary4Display'] = statistics.mean(totalBallsList)
+        rsCEA['Summary4Value'] = statistics.mean(totalBallsList)
 
     return rsCEA

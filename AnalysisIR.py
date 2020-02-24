@@ -16,6 +16,7 @@ from analysisTypes.totalInnerBalls import totalInnerBalls
 from analysisTypes.totalLowBalls import totalLowBalls
 from analysisTypes.totalOuterBalls import totalOuterBalls
 from analysisTypes.totalScore import totalScore
+from analysisTypes.totalUpperBalls import totalUpperBalls
 from analysisTypes.wheelStage2 import wheelStage2
 from analysisTypes.wheelStage3 import wheelStage3
 
@@ -78,10 +79,11 @@ class analysis():
 
     # Function to retrieve data records for a given team for all their matches and set it to rsRobotMatches
     def _getTeamData(self, team):
-        self._run_query("SELECT MatchScouting.*, Matches.MatchNo "
+        self._run_query("SELECT MatchScouting.*, Matches.MatchNo, Teams.RobotWeight "
             "FROM (Events INNER JOIN Matches ON Events.EventID = Matches.EventID) "
             "INNER JOIN MatchScouting ON (Matches.EventID = MatchScouting.EventID) "
             "AND (Matches.MatchID = MatchScouting.MatchID) "
+            "INNER JOIN Teams ON (MatchScouting.Team = Teams.Team) "
             "WHERE (((MatchScouting.Team) = " + team[0] + " "
             "AND ((Events.CurrentEvent) = 1))"
             "AND ((ScoutingStatus = 1) Or (ScoutingStatus = 2) Or (ScoutingStatus = 3)) "
@@ -106,7 +108,9 @@ class analysis():
     def _analyzeTeams(self):
         # Loop over the # of teams and run each of the analysis functions calling _insertAnalysis after each one is run
         for team in self.rsRobots:
+            # print(team)
             rsRobotMatches = self._getTeamData(team)
+            # print(rsRobotMatches)
 
             if rsRobotMatches:
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
@@ -121,8 +125,8 @@ class analysis():
                 rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-                # rsCEA = groundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
-                # self._insertAnalysis(rsCEA)
+                rsCEA = groundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 
                 rsCEA = hopperLoad(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
@@ -157,6 +161,9 @@ class analysis():
                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
+                rsCEA = totalUpperBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
                 rsCEA = wheelStage2(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
@@ -176,6 +183,7 @@ class analysis():
         self._run_query("INSERT INTO CurrentEventAnalysis "
                         + columnHeadings + " VALUES "
                         + values + ";")
+        # print(columnHeadings + values)
         self.conn.commit()
 
 
