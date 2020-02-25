@@ -89,7 +89,7 @@ def totalLowBalls(analysis, rsRobotMatches):
             totalBallsList.append(totalBalls)
 
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                str(TeleBallLowZone1) + "|" + str(totalBalls)
+                str(totalLowBalls) + "|" + str(totalBalls)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = TeleBallLowZone1
             if totalBalls >= 30:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
