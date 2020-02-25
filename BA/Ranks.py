@@ -1,64 +1,29 @@
+import mysql.connector as mariaDB
 import tbapy
-import xlsxwriter
+import string
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 x = 195
 team = tba.team(x)
+event = '2019cur'  # This is the key for the event
 
-workbook = xlsxwriter.Workbook('EVENT RANKINGS.xlsx')
-worksheet = workbook.add_worksheet()
+def sortbyteam(d):
+    return d.get('team_number', None)
 
-row = 0
-col = 0
 
-event = '2019necmp'
-bold = workbook.add_format({'bold': True})
-merge_format = workbook.add_format({
-    'bold': 1,
-    'border': 1,
-    'align': 'center',
-    'valign': 'vcenter',
-    'fg_color': 'yellow'})
-
-matchesPlayed = tba.event_rankings(event).get('rankings')
-matchesplayedDict = {}
-for team in matchesPlayed:
-    matchesplayedDict[team.get("rank")] = team.get("matches_played")
-
-row = 1
-col = 2
-for key in matchesplayedDict.keys():
-    worksheet.write(row, col, matchesplayedDict[key])
-    row += 1
-
+conn = mariaDB.connect(user='admin',
+                       passwd='Einstein195',
+                       host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                       database='team195_scouting')
+cursor = conn.cursor()
+eventTeams = tba.event_teams(event)
 
 teamRanks = tba.event_rankings(event).get('rankings')
-teamrankDict = {}
-for rank in teamRanks:
-    teamrankDict[rank.get("rank")] = rank.get("team_key")[3:]
+teamRankList = []
+for teamRank in teamRanks:
+    teamRankList.append(teamRank['team_key'][3:])
 
-row = 1
-col = 0
-for key in teamrankDict.keys():
-    worksheet.write(row, col, key)
-    worksheet.write(row, col + 1, teamrankDict[key])
-    row += 1
-
-print(teamRanks)
-
-quals = tba.event_rankings(event).get('rankings')
-qualAverage = {}
-for team in quals:
-    qualAverage[team.get("rank")] = team.get("qual_average")
-
-row = 1
-col = 3
-for key in qualAverage.keys():
-    worksheet.write(row, col, qualAverage[key])
-    row += 1
-
-
-print(teamRanks)
-print(matchesplayedDict)
-print(teamrankDict)
-print(qualAverage)
-workbook.close()
+for team in teamRankList:
+    query = "INSERT INTO BlueAllianceRankings (Team, TeamRank) VALUES " + "('" + str(team) + "', '" + \
+            str(teamRankList.index(team) + 1) + "');"
+    cursor.execute(query)
+    conn.commit()
