@@ -30,15 +30,26 @@ for row in rsMatches:
         i += 1
 
 # fix team match numbers
-cursor.execute("SELECT MatchScouting.Team FROM (MatchScouting "
-                "INNER JOIN Matches ON MatchScouting.MatchID = Matches.MatchID) "
-                "INNER JOIN Events ON Matches.EventID = Events.EventID "
-                "WHERE (((Events.CurrentEvent) = 1)) "
-                "GROUP BY CAST(MatchScouting.Team AS INT), MatchScouting.Team "
-                "HAVING (((MatchScouting.Team) Is Not Null)); ")
+cursor.execute("SELECT DISTINCT MatchScouting.Team "
+               "FROM MatchScouting INNER JOIN Events ON MatchScouting.EventID = Events.EventID "
+               "AND ((Events.CurrentEvent) = 1) "
+               "ORDER BY MatchScouting.Team; ")
 rsTeams = cursor.fetchall()
 print(rsTeams)
 
 for team in rsTeams:
-    i = 1
-    cursor.execute("SELECT ")
+    print(team[0])
+    cursor.execute("SELECT MatchScouting.MatchScoutingID FROM MatchScouting INNER JOIN Events "
+                   "ON MatchScouting.EventID = Events.EventID AND ((Events.CurrentEvent) = 1) "
+                   "WHERE MatchScouting.Team = "
+                   + team[0] + " ORDER BY MatchScouting.MatchScoutingID; ")
+    rsTeamMatchScouting = cursor.fetchall()
+    print(rsTeamMatchScouting)
+    matchNum = 0
+    for match in rsTeamMatchScouting:
+        matchNum += 1
+        print(match[0])
+        query = "UPDATE MatchScouting SET MatchScouting.TeamMatchNo = " + str(matchNum) + " WHERE MatchScouting.MatchScoutingID = " + str(match[0]) + ";"
+        print(query)
+        cursor.execute(query)
+        conn.commit()
