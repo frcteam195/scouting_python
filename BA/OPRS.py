@@ -1,6 +1,5 @@
 import tbapy
 import xlsxwriter
-import operator
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 x = 195
 team = tba.team(x)
