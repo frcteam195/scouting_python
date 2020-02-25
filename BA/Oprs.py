@@ -16,14 +16,12 @@ conn = mariaDB.connect(user='admin',
                        database='team195_scouting')
 cursor = conn.cursor()
 eventTeams = tba.event_teams(event)
+eventOpr = tba.event_oprs(event).get("oprs")
+eventoprSorted = [(k[3:], eventOpr[k]) for k in sorted(eventOpr, key=eventOpr.get, reverse=True)]
+print(eventoprSorted)
 
-teamRanks = tba.event_rankings(event).get('rankings')
-teamRankList = []
-for teamRank in teamRanks:
-    teamRankList.append(teamRank['team_key'][3:])
-
-for team in teamRankList:
-    query = "INSERT INTO BlueAllianceRankings (Team, TeamRank) VALUES " + "('" + str(team) + "', '" + \
-            str(teamRankList.index(team) + 1) + "');"
+for team in eventoprSorted:
+    query = "INSERT INTO BlueAllianceOPR (Team, OPR) VALUES " + "('" + str(team[0]) + "', '" + \
+            str(team[1]) + "');"
     cursor.execute(query)
     conn.commit()

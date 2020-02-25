@@ -47,5 +47,6 @@ print(teamList)
 workbook.close()
 
 print(tba.team_events(195, 2019, keys=True))
+print(eventTeams)
 
 
