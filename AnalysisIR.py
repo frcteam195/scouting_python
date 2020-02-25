@@ -1,6 +1,6 @@
 import mysql.connector as mariaDB
 # For each analysisType we create add a new import statement. We could import all analysisTypes
-from analysisTypes.autonomous import autonomous
+from analysisTypes.autonomous import autonomous # Works in Database
 from analysisTypes.ballSummary import ballSummary
 from analysisTypes.brokeDown import brokeDown
 from analysisTypes.climb import climb
@@ -9,17 +9,15 @@ from analysisTypes.hopperLoad import hopperLoad
 from analysisTypes.lostComm import lostComm
 from analysisTypes.matchVideos import matchVideos
 from analysisTypes.playedDefense import playedDefense
-from analysisTypes.startingPosition import startingPosition
-from analysisTypes.subSBroke import subSBroke
-from analysisTypes.totalBalls import totalBalls
-from analysisTypes.totalInnerBalls import totalInnerBalls
-from analysisTypes.totalLowBalls import totalLowBalls
-from analysisTypes.totalOuterBalls import totalOuterBalls
+from analysisTypes.subSBroke import subSBroke # Works in Database
+from analysisTypes.totalBalls import totalBalls # Works in Database
+from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
+from analysisTypes.totalLowBalls import totalLowBalls # Needed Fixing, Should Work Now
+from analysisTypes.totalOuterBalls import totalOuterBalls # Needed Fixing, Should Work Now
 from analysisTypes.totalScore import totalScore
 from analysisTypes.totalUpperBalls import totalUpperBalls
 from analysisTypes.wheelStage2 import wheelStage2
 from analysisTypes.wheelStage3 import wheelStage3
-
 from analysisTypes.startingPosition import startingPosition
 
 # Define a Class called analysis

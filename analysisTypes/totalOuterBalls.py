@@ -79,7 +79,7 @@ def totalOuterBalls(analysis, rsRobotMatches):
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            totalBalls = (TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
+            totalBalls = (TeleBallLowZone1 + TeleBallOuterZone1 + TeleBallInnerZone1 + TeleBallOuterZone2 +
                           TeleBallInnerZone2 + TeleBallOuterZone3 + TeleBallInnerZone3 +
                           TeleBallOuterZone4 + TeleBallInnerZone4 + TeleBallOuterZone5 +
                           TeleBallInnerZone5 + AutoBallLow + AutoBallInner + AutoBallOuter)
