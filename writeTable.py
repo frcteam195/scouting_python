@@ -4,7 +4,7 @@ import sys
 
 
 class dumpTable(object):
-    def __init__(self, , file, table):
+    def __init__(self, file, table):
         # Connection to AWS Testing database - use when you would destroy tables with proper data
         # conn = mariaDB.connect(user='admin',
         #                        passwd='Einstein195',
@@ -18,8 +18,6 @@ class dumpTable(object):
                                     database='team195_scouting')
 
         self.cursor = self.conn.cursor()
-
-
 
         while table is None:
             table = input("Enter table name ('?' for list of tables, 'q' to quit): ")

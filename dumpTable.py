@@ -1,5 +1,6 @@
 import mysql.connector as mariaDB
 
+
 class dumpTable(object):
     def __init__(self, table):
         # Connection to AWS Testing database - use when you would destroy tables with proper data
@@ -15,13 +16,14 @@ class dumpTable(object):
                                     database='team195_scouting')
 
         self.cursor = self.conn.cursor()
-        self.dump(Matches)
+        self.dump()
 
-    def _run_query(self,query):
+    def _run_query(self, query):
         self.cursor.execute(query)
 
-    def dump(self,table):
-        self._run_query("SELECT * FROM team195_scouting." + arg + ";")
+    def dump(self, table):
+        # self._run_query("SELECT * FROM team195_scouting." + arg + ";")
+        self._run_query("SELECT * FROM team195_scouting.Matches;")
         columns = [column[0] for column in cursor.description]
         print(columns)
         results = []
@@ -31,6 +33,7 @@ class dumpTable(object):
         with open('data2.json', 'w') as outfile:
             print(results)
             json.dump(results, outfile, sort_keys=True, indent=4, ensure_ascii=False)
+
 
 if __name__ == '__main__':
     mydumpTable = dumpTable(object)
