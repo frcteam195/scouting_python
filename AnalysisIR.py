@@ -4,21 +4,21 @@ from analysisTypes.autonomous import autonomous # Works in Database
 from analysisTypes.ballSummary import ballSummary
 from analysisTypes.brokeDown import brokeDown
 from analysisTypes.climb import climb
-from analysisTypes.groundPickup import groundPickup
-from analysisTypes.hopperLoad import hopperLoad
-from analysisTypes.lostComm import lostComm
-from analysisTypes.matchVideos import matchVideos
-from analysisTypes.playedDefense import playedDefense
+from analysisTypes.groundPickup import groundPickup # Works in Database
+from analysisTypes.hopperLoad import hopperLoad # Works in Database
+from analysisTypes.lostComm import lostComm # Works in Database
+from analysisTypes.matchVideos import matchVideos # Works in Database
+from analysisTypes.playedDefense import playedDefense # Works in Database
 from analysisTypes.subSBroke import subSBroke # Works in Database
 from analysisTypes.totalBalls import totalBalls # Works in Database
 from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
-from analysisTypes.totalLowBalls import totalLowBalls # Needed Fixing, Should Work Now
-from analysisTypes.totalOuterBalls import totalOuterBalls # Needed Fixing, Should Work Now
-from analysisTypes.totalScore import totalScore
-from analysisTypes.totalUpperBalls import totalUpperBalls
-from analysisTypes.wheelStage2 import wheelStage2
-from analysisTypes.wheelStage3 import wheelStage3
-from analysisTypes.startingPosition import startingPosition
+from analysisTypes.totalLowBalls import totalLowBalls # Works in Database
+from analysisTypes.totalOuterBalls import totalOuterBalls # Works in Database
+from analysisTypes.totalScore import totalScore # NEEDS REVISING
+from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
+from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
+from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
+from analysisTypes.startingPosition import startingPosition # Works in Database
 
 # Define a Class called analysis
 class analysis():
