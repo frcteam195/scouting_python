@@ -25,7 +25,7 @@ def brokeDown(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             # Retrieve values from the matchResults and set to appropriate variables
-            brokeDown = matchResults[analysis.columns.index('SummLostComm')]
+            brokeDown = matchResults[analysis.columns.index('SummBrokeDown')]
             if brokeDown is None:
                 brokeDown = 0
             if brokeDown == 0:
