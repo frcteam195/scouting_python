@@ -42,7 +42,7 @@ def totalScore(analysis, rsRobotMatches):
             if teleBallsLow is None:
                 teleBallsLow = 0
 
-            TeleBallOuterZone1 = matchResults[analysis.columns.index('TeleBallLowZone1')]
+            TeleBallOuterZone1 = matchResults[analysis.columns.index('TeleBallOuterZone1')]
             if TeleBallOuterZone1 is None:
                 TeleBallOuterZone1 = 0
             TeleBallOuterZone2 = matchResults[analysis.columns.index('TeleBallOuterZone2')]
