@@ -1,6 +1,5 @@
 import mysql.connector as mariaDB
 import tbapy
-import string
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 x = 195
 team = tba.team(x)
@@ -25,5 +24,6 @@ for teamRank in teamRanks:
 for team in teamRankList:
     query = "INSERT INTO BlueAllianceRankings (Team, TeamRank) VALUES " + "('" + str(team) + "', '" + \
             str(teamRankList.index(team) + 1) + "');"
+    print(query)
     cursor.execute(query)
     conn.commit()

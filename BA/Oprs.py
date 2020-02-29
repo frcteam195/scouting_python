@@ -23,5 +23,6 @@ print(eventoprSorted)
 for team in eventoprSorted:
     query = "INSERT INTO BlueAllianceOPR (Team, OPR) VALUES " + "('" + str(team[0]) + "', '" + \
             str(team[1]) + "');"
+    print(query)
     cursor.execute(query)
     conn.commit()

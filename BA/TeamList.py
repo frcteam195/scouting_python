@@ -36,5 +36,3 @@ for team in sorted(eventTeams, key=sortbyteam):
     cursor.execute(query)
     conn.commit()
 
-print(teamList)
-print(query)
