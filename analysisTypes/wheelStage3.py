@@ -31,7 +31,7 @@ def wheelStage3(analysis, rsRobotMatches):
             else:
                 wheelStage3AttemptsString = ''
 
-            if wheelStage3Status == 0:
+            if wheelStage3Status == 0 and wheelStage3Attempts == 0:  # No attempt:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = '-'
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
             elif wheelStage3Status == 1:
