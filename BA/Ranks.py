@@ -16,6 +16,12 @@ conn = mariaDB.connect(user='admin',
 cursor = conn.cursor()
 eventTeams = tba.event_teams(event)
 
+cursor.execute("DELETE FROM BlueAllianceRankings")
+conn.commit()
+
+cursor.execute("SELECT Events.BAEventID FROM Events WHERE Events.CurrentEvent = 1;")
+event = cursor.fetchone()[0]
+
 teamRanks = tba.event_rankings(event).get('rankings')
 teamRankList = []
 for teamRank in teamRanks:

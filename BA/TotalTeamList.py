@@ -18,7 +18,6 @@ cursor = conn.cursor()
 totalTeams = tba.teams(year=2020)
 teamList = []
 
-
 for team in totalTeams:
     tempNick = ''
     teamNum = team.get('team_number')
