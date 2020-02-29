@@ -1,6 +1,5 @@
 import statistics
 
-
 def climb(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
@@ -20,7 +19,7 @@ def climb(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             ClimbMoveOnBar = matchResults[analysis.columns.index('ClimbMoveOnBar')]
-            if ClimbMoveOnBar == 1:
+            if ClimbMoveOnBar == 1 and ClimbPoints >= 25:
                 ClimbMoveOnBarString = "*"
             else:
                 ClimbMoveOnBarString = ""
@@ -45,7 +44,6 @@ def climb(analysis, rsRobotMatches):
             ClimbLevelStatus = matchResults[analysis.columns.index('ClimbLevelStatus')]
             if ClimbLevelStatus is None:
                 ClimbLevelStatus = 0
-
             if ClimbLevelStatus == 0:
                 ClimbLevelPoints = 0
             else:
