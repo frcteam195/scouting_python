@@ -1,10 +1,8 @@
 import mysql.connector as mariaDB
 import tbapy
-import string
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 x = 195
 team = tba.team(x)
-event = '2019cur'  # This is the key for the event
 
 def sortbyteam(d):
     return d.get('team_number', None)
@@ -15,8 +13,15 @@ conn = mariaDB.connect(user='admin',
                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                        database='team195_scouting')
 cursor = conn.cursor()
-eventTeams = tba.event_teams(event)
 
+
+cursor.execute("DELETE FROM BlueAllianceRankings")
+conn.commit()
+
+cursor.execute("SELECT Events.BAEventID FROM Events WHERE Events.CurrentEvent = 1;")
+event = cursor.fetchone()[0]
+
+eventTeams = tba.event_teams(event)
 teamRanks = tba.event_rankings(event).get('rankings')
 teamRankList = []
 for teamRank in teamRanks:
@@ -25,5 +30,6 @@ for teamRank in teamRanks:
 for team in teamRankList:
     query = "INSERT INTO BlueAllianceRankings (Team, TeamRank) VALUES " + "('" + str(team) + "', '" + \
             str(teamRankList.index(team) + 1) + "');"
+    print(query)
     cursor.execute(query)
     conn.commit()

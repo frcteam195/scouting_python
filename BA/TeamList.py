@@ -4,7 +4,6 @@ import string
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 x = 195
 team = tba.team(x)
-event = '2020mawne'  # This is the key for the event
 
 def sortbyteam(d):
     return d.get('team_number', None)
@@ -15,9 +14,15 @@ conn = mariaDB.connect(user='admin',
                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                        database='team195_scouting')
 cursor = conn.cursor()
-eventTeams = tba.event_teams(event)
 teamList = []
 
+cursor.execute("DELETE FROM BlueAllianceTeams")
+conn.commit()
+
+cursor.execute("SELECT Events.BAEventID FROM Events WHERE Events.CurrentEvent = 1;")
+event = cursor.fetchone()[0]
+
+eventTeams = tba.event_teams(event)
 for team in sorted(eventTeams, key=sortbyteam):
     tempNick = ''
     teams = []
@@ -36,5 +41,3 @@ for team in sorted(eventTeams, key=sortbyteam):
     cursor.execute(query)
     conn.commit()
 
-print(teamList)
-print(query)
