@@ -52,7 +52,7 @@ for row in rsBAMatches:
 #
 #
 # # Fix Team #s for the six alliance stations. This is good in case a team number changed or was entered incorrectly
-# updateQuery = "UPDATE MatchScouting INNER JOIN Matches ON (MatchScouting.MatchID = Matches.MatchID) " \
+# updateQuery = "UPDATE Matches INNER JOIN BlueAllianceSchedule ON (Matches.MatchNo = Matches.MatchID) " \
 #               "INNER JOIN Events ON (Events.EventID = Matches.EventID) " \
 #               "SET MatchScouting.Team = Matches.RedTeam1 " \
 #               "WHERE Events.CurrentEvent = 1 AND MatchScouting.AllianceStationID = 1"
