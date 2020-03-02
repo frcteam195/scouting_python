@@ -1,5 +1,5 @@
 import cmd
-import sys
+import string, sys
 import mysql.connector as mariaDB
 import json
 
@@ -24,18 +24,18 @@ class ScoutingCLI(cmd.Cmd):
         # This bit of code create a dictionary named results with dynamic columns from the DB along with data records
         conn = mariaDB.connect(user='admin',
                                passwd='Einstein195',
-                               host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                               host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                database='team195_scouting')
         cursor = conn.cursor()
         query = "SELECT * FROM team195_scouting." + arg + ";"
-        result = cursor.execute(query)
+        cursor.execute(query)
         columns = [column[0] for column in cursor.description]
         print(columns)
         results = []
         for row in cursor.fetchall():
             results.append(dict(zip(columns, row)))
 
-        with open('data.json', 'w') as outfile:
+        with open('../data.json', 'w') as outfile:
             print(results)
             json.dump(results, outfile, sort_keys=True, indent=4, ensure_ascii=False)
 
