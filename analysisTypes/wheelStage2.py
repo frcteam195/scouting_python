@@ -29,12 +29,12 @@ def wheelStage2(analysis, rsRobotMatches):
             else:
                 wheelStage2AttemptsString = ''
 
-            if wheelStage2Status == 0:
+            if wheelStage2Status == 0 and wheelStage2Attempts == 0:  # No attempt
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = '-'
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
-            elif wheelStage2Status == 1:
+            elif wheelStage2Status == 1:  # success at the wheel
                 sucessTotal += 1
-                timeList.append(wheelStage2Time)
+                timeList.append(wheelStage2Time)  # only putting times in the list when there is a success
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
                     str(wheelStage2Time) + str(wheelStage2AttemptsString)
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = wheelStage2Time
@@ -46,17 +46,17 @@ def wheelStage2(analysis, rsRobotMatches):
                     rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
                 else:
                     rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
-            else:
+            else:  # attempt, but failure
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
                     str(wheelStage2Time) + str(wheelStage2AttemptsString)
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if len(timeList) > 0:
-        rsCEA['Summary1Display'] = str(sucessTotal / numberOfMatchesPlayed)
-        rsCEA['Summary1Value'] = sucessTotal / numberOfMatchesPlayed
-        rsCEA['Summary2Display'] = str(statistics.mean(timeList))
-        rsCEA['Summary2Value'] = statistics.mean(timeList)
-        rsCEA['Summary3Display'] = str(statistics.median(timeList))
-        rsCEA['Summary3Value'] =  statistics.median(timeList)
+        rsCEA['Summary1Display'] = str(statistics.mean(timeList))
+        rsCEA['Summary1Value'] = statistics.mean(timeList)
+        rsCEA['Summary2Display'] = str(statistics.median(timeList))
+        rsCEA['Summary2Value'] =  statistics.median(timeList)
+        rsCEA['Summary4Display'] = str(sucessTotal / numberOfMatchesPlayed)
+        rsCEA['Summary4Value'] = sucessTotal / numberOfMatchesPlayed
 
     return rsCEA

@@ -1,9 +1,10 @@
 import mysql.connector as mariaDB
+import numpy as np
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 from analysisTypes.autonomous import autonomous # Works in Database
 from analysisTypes.ballSummary import ballSummary
-from analysisTypes.brokeDown import brokeDown
-from analysisTypes.climb import climb
+from analysisTypes.brokeDown import brokeDown # Works in Database
+from analysisTypes.climb import climb # Works in Database
 from analysisTypes.groundPickup import groundPickup # Works in Database
 from analysisTypes.hopperLoad import hopperLoad # Works in Database
 from analysisTypes.lostComm import lostComm # Works in Database
@@ -14,7 +15,7 @@ from analysisTypes.totalBalls import totalBalls # Works in Database
 from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
 from analysisTypes.totalLowBalls import totalLowBalls # Works in Database
 from analysisTypes.totalOuterBalls import totalOuterBalls # Works in Database
-from analysisTypes.totalScore import totalScore # NEEDS REVISING
+from analysisTypes.totalScore import totalScore # Works in Database
 from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
 from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
 from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
@@ -46,6 +47,7 @@ class analysis():
         self._wipeCEA()
         self.rsRobots = self._getTeams()
         self._analyzeTeams()
+        self._rankTeamsAll()
 
     # Function to run a query - the query string must be passed to the function
     def _run_query(self, query):
@@ -167,6 +169,55 @@ class analysis():
 
                 rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
+
+
+    # Helper function to rank a single analysis type, called by _rankTeamsAll
+    def _rankTeamsSingle(self, analysis_type):
+        # Get Summary 1 value for each team from CEA with analysis_type
+        # Sort in descending order by sum 1 value
+        # Determine percentile of each team
+        # Optional: see if at percentile cutoffs there is any repeated values
+        # Update summary 3 value in CEA for each team (rank based on percentile)
+        self._run_query("SELECT Team, Summary1Value "
+                        "FROM CurrentEventAnalysis "
+                        "WHERE AnalysisTypeID = " + str(analysis_type) + ";")
+        team_sum1 = self.cursor.fetchall() # List of tuples (team, summary1value)
+        team_sum1 = [team_tup for team_tup in team_sum1 if team_tup[1] is not None]
+        # print(team_sum1)
+        sum1 = [item[1] for item in team_sum1]
+        percentiles = np.percentile(sum1, [25, 50, 75, 90])
+
+        team_coloring = {}
+        for team in team_sum1:
+            if team[1] <= percentiles[0]:
+                team_color = 1
+                team_display = 10
+            elif team[1] <= percentiles[1]:
+                team_color = 2
+                team_display = 25
+            elif team[1] <= percentiles[2]:
+                team_color = 3
+                team_display = 50
+            elif team[1] <= percentiles[3]:
+                team_color = 4
+                team_display = 75
+            else:
+                team_color = 5
+                team_display = 90
+
+            query = "UPDATE CurrentEventAnalysis SET CurrentEventAnalysis.Summary3Format = " \
+                    + str(team_color) + ", CurrentEventAnalysis.Summary3Display = "\
+                    + str(team_display) + ", CurrentEventAnalysis.Summary3Value = " + str(team_display) \
+                    + " WHERE CurrentEventAnalysis.Team = '" + str(team[0]) \
+                    + "' AND CurrentEventAnalysis.AnalysisTypeID = " + str(analysis_type) + " ;"
+            self._run_query(query)
+            self.conn.commit()
+
+    # run the _rankTeamsSingle for all analysis types in the analysisTypeList defined in this function
+    def _rankTeamsAll(self):
+        analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        for analysisType in analysisTypeList:
+            self._rankTeamsSingle(analysisType)
 
 
     # Function to insert an rsCEA record into the DB.
