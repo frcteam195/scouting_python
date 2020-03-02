@@ -19,35 +19,25 @@ def climb(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             ClimbMoveOnBar = matchResults[analysis.columns.index('ClimbMoveOnBar')]
-            if ClimbMoveOnBar == 1 and ClimbPoints >= 25:
+            if ClimbMoveOnBar == 1:
                 ClimbMoveOnBarString = "*"
             else:
                 ClimbMoveOnBarString = ""
 
             # Status values: 1=no attempt, 2=success, 3=fail, 4=busy, 5=parked
             ClimbStatus = matchResults[analysis.columns.index('ClimbStatus')]
-            if ClimbStatus is None:
-                ClimbPoints = 0
-            elif ClimbStatus == 0:
-                ClimbPoints = 0
-            elif ClimbStatus == 1:
+            if (ClimbStatus is None) or (ClimbStatus == 3 or 4 or 5):
                 ClimbPoints = 0
             elif ClimbStatus == 2:
                 ClimbPoints = 25
-            elif ClimbStatus == 3 or 4:
-                ClimbPoints = 0
-            elif ClimbStatus == 5:
-                ClimbPoints = 5
             else:
-                ClimbPoints = 0
+                ClimbPoints = 999
 
             ClimbLevelStatus = matchResults[analysis.columns.index('ClimbLevelStatus')]
-            if ClimbLevelStatus is None:
-                ClimbLevelStatus = 0
-            if ClimbLevelStatus == 0:
-                ClimbLevelPoints = 0
-            else:
+            if ClimbLevelStatus == 1 and ClimbStatus == 2:
                 ClimbLevelPoints = 15
+            else:
+                ClimbLevelPoints = 0
 
             RobotWeight = matchResults[analysis.columns.index('RobotWeight')]
             if RobotWeight is None:

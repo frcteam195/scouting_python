@@ -11,7 +11,7 @@ cursor = conn.cursor()
 cursor.execute("SELECT Matches.* FROM Matches LEFT JOIN MatchScouting  "
                "ON (Matches.EventID = MatchScouting.EventID) "
                "AND Matches.MatchID = MatchScouting.MatchID "
-               "WHERE (((Matches.EventID) = 1) AND ((MatchScouting.MatchID) is Null));")
+               "WHERE (((Events.CurrentEvent) = 1) AND ((MatchScouting.MatchID) is Null));")
 rsMatches = cursor.fetchall()
 # print(rsMatches)
 

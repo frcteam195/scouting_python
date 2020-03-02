@@ -52,11 +52,11 @@ def wheelStage2(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if len(timeList) > 0:
-        rsCEA['Summary1Display'] = str(sucessTotal / numberOfMatchesPlayed)
-        rsCEA['Summary1Value'] = sucessTotal / numberOfMatchesPlayed
-        rsCEA['Summary2Display'] = str(statistics.mean(timeList))
-        rsCEA['Summary2Value'] = statistics.mean(timeList)
-        rsCEA['Summary3Display'] = str(statistics.median(timeList))
-        rsCEA['Summary3Value'] =  statistics.median(timeList)
+        rsCEA['Summary1Display'] = str(statistics.mean(timeList))
+        rsCEA['Summary1Value'] = statistics.mean(timeList)
+        rsCEA['Summary2Display'] = str(statistics.median(timeList))
+        rsCEA['Summary2Value'] =  statistics.median(timeList)
+        rsCEA['Summary4Display'] = str(sucessTotal / numberOfMatchesPlayed)
+        rsCEA['Summary4Value'] = sucessTotal / numberOfMatchesPlayed
 
     return rsCEA

@@ -71,10 +71,10 @@ def autonomous(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = statistics.mean(totalBallsList)
         rsCEA['Summary1Value'] = statistics.mean(totalBallsList)
-        rsCEA['Summary2Display'] = statistics.mean(totalHighBallsList)
-        rsCEA['Summary2Value'] = statistics.mean(totalHighBallsList)
-        rsCEA['Summary3Display'] = statistics.median(totalBallsList)
-        rsCEA['Summary3Value'] = statistics.median(totalBallsList)
+        rsCEA['Summary2Display'] = statistics.median(totalBallsList)
+        rsCEA['Summary2Value'] = statistics.median(totalBallsList)
+        rsCEA['Summary4Display'] = statistics.mean(totalHighBallsList)
+        rsCEA['Summary4Value'] = statistics.mean(totalHighBallsList)
         # Some test code for calculating min, max, quantiles
         #print(min(totalBallsList))
         #print(max(totalBallsList))
