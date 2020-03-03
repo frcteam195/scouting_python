@@ -9,14 +9,11 @@ x = 195
 def sortbymatch(d):
     return d.get('match_number', None)
 
-
 conn = mariaDB.connect(user='admin',
                        passwd='Einstein195',
                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                        database='team195_scouting')
 cursor = conn.cursor()
-cursor.execute("DELETE FROM BlueAllianceSchedule")
-conn.commit()
 
 team = tba.team(x)
 cursor.execute("SELECT Events.BAEventID FROM Events WHERE Events.CurrentEvent = 1;")
@@ -28,13 +25,17 @@ eventMatchListBlue = []
 matchNumberList = []
 eventMatches = tba.event_matches(event)
 
-
+print(len(sys.argv))
 if len(sys.argv) != 2:
-    print('There needs to be one argument that is either excel or db')
-    exit(-1)
+    print('Missing argument [db] or [excel]')
+    print('Usage: python3 Schedule.py [db]|[excel]')
+    sys.exit(0)
 else:
     args = getopt.getopt(sys.argv,"")[1][1]
     if args == 'db':
+        cursor.execute("DELETE FROM BlueAllianceSchedule")
+        conn.commit()
+
         for match in eventMatches:
             if match.comp_level == 'qm':
                 matchNumberList.append(match.match_number)
@@ -63,9 +64,10 @@ else:
             Blue1 = eventMatchListBlue[match - 1].get('blue')[0]
             Blue2 = eventMatchListBlue[match - 1].get('blue')[1]
             Blue3 = eventMatchListBlue[match - 1].get('blue')[2]
-            query = "INSERT INTO BlueAllianceSchedule (MatchNo, RedTeam1, RedTeam2, RedTeam3, BlueTeam1, BlueTeam2, " \
-                    "BlueTeam3) VALUES " + "('" + str(match) + "', '" + str(Red1) + "', '" + str(Red2) + "', '" + str(Red3) + \
-                    "', '" + str(Blue1) + "', '" + str(Blue2) + "', '" + str(Blue3) + "');"
+            query = "INSERT INTO BlueAllianceSchedule (MatchNo, RedTeam1, RedTeam2, RedTeam3, " \
+                    "BlueTeam1, BlueTeam2, BlueTeam3, BAEventID) VALUES " + \
+                    "('" + str(match) + "', '" + str(Red1) + "', '" + str(Red2) + "', '" + str(Red3) + "', '" + \
+                    str(Blue1) + "', '" + str(Blue2) + "', '" + str(Blue3) + "', '" + str(event) + "';"
             cursor.execute(query)
             conn.commit()
 
@@ -82,6 +84,7 @@ else:
         worksheet.write(col, 4, 'BlueTeam1')
         worksheet.write(col, 5, 'BlueTeam2')
         worksheet.write(col, 6, 'BlueTeam3')
+        worksheet.write(col, 7, 'BAEventID')
 
         eventmatchList = []
         eventMatches = tba.event_matches(event)
@@ -123,8 +126,15 @@ else:
                     worksheet.write_row(row, col, matchNumber[key])
                 row += 1
 
+        row = 1
+        col = 7
+        numberMatch.sort()
+        for matches in numberMatch:
+            worksheet.write(row, col, event)
+            row += 1
+
         workbook.close()
 
     else:
         print('The argument needs to be either excel or db')
-        exit(-1)
+        sys.exit(0)
