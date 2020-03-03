@@ -10,19 +10,19 @@ cursor = conn.cursor()
 query = "SELECT Events.EventID, Events.BAEventID FROM Events WHERE Events.CurrentEvent = 1; "
 cursor.execute(query)
 eventData = cursor.fetchall()
-print(eventData)
+# print(eventData)
 eventID = eventData[0][0]
 BAEventID = eventData[0][1]
 # eventID = [item[0] for item in eventData]
 # BAEventID = [item[1] for item in eventData]
-print(eventID)
-print(BAEventID)
+# print(eventID)
+# print(BAEventID)
 
 query = "SELECT BlueAllianceSchedule.* FROM BlueAllianceSchedule;"
 # print(query)
 cursor.execute(query)
 rsBAMatches = cursor.fetchall()
-print(rsBAMatches[0][7])
+# print(rsBAMatches[0][7])
 
 if  rsBAMatches[0][7] != BAEventID:
     print("BAEventIDs do not match between BA-Schedule table and Events table")
@@ -33,14 +33,14 @@ for row in rsBAMatches:
     rsMatchRecord = {'EventID': eventID, 'MatchNo': row[0],
                      'RedTeam1': row[1], 'RedTeam2': row[2], 'RedTeam3': row[3],
                      'BlueTeam1': row[4], 'BlueTeam2': row[5], 'BlueTeam3': row[6]}
-    print(rsMatchRecord)
+    # print(rsMatchRecord)
     query = "SELECT COUNT(*) FROM Matches WHERE Matches.MatchNo = " \
             + str(row[0]) + " AND Matches.EventID = " + str(eventID) + ";"
-    print(query)
+    # print(query)
     cursor.execute(query)
     count = cursor.fetchall()
 
-    print(count[0][0])
+    # print(count[0][0])
     if count[0][0] == 0:
         items = rsMatchRecord.items()
         columns = str(tuple([x[0] for x in items])).replace("'", "")
@@ -52,9 +52,13 @@ for row in rsBAMatches:
 #
 #
 # # Fix Team #s for the six alliance stations. This is good in case a team number changed or was entered incorrectly
-# updateQuery = "UPDATE Matches INNER JOIN BlueAllianceSchedule ON (Matches.MatchNo = Matches.MatchID) " \
-#               "INNER JOIN Events ON (Events.EventID = Matches.EventID) " \
-#               "SET MatchScouting.Team = Matches.RedTeam1 " \
-#               "WHERE Events.CurrentEvent = 1 AND MatchScouting.AllianceStationID = 1"
-# cursor.execute(updateQuery)
-# conn.commit()
+updateQuery = "UPDATE Matches INNER JOIN BlueAllianceSchedule ON (Matches.MatchNo = BlueAllianceSchedule.MatchNo) " \
+              "SET Matches.RedTeam1 = BlueAllianceSchedule.RedTeam1, " \
+              "Matches.RedTeam2 = BlueAllianceSchedule.RedTeam2, " \
+              "Matches.RedTeam3 = BlueAllianceSchedule.RedTeam3, " \
+              "Matches.RedTeam1 = BlueAllianceSchedule.RedTeam1, " \
+              "Matches.RedTeam2 = BlueAllianceSchedule.RedTeam2, " \
+              "Matches.RedTeam3 = BlueAllianceSchedule.RedTeam3 " \
+              "WHERE Matches.EventID = " + str(eventID) + " ;"
+cursor.execute(updateQuery)
+conn.commit()
