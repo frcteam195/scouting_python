@@ -65,9 +65,10 @@ else:
             Blue2 = eventMatchListBlue[match - 1].get('blue')[1]
             Blue3 = eventMatchListBlue[match - 1].get('blue')[2]
             query = "INSERT INTO BlueAllianceSchedule (MatchNo, RedTeam1, RedTeam2, RedTeam3, " \
-                    "BlueTeam1, BlueTeam2, BlueTeam3, BAEventID) VALUES " + \
+                    "BlueTeam1, BlueTeam2, BlueTeam3, BAEventsID) VALUES " + \
                     "('" + str(match) + "', '" + str(Red1) + "', '" + str(Red2) + "', '" + str(Red3) + "', '" + \
-                    str(Blue1) + "', '" + str(Blue2) + "', '" + str(Blue3) + "', '" + str(event) + "';"
+                    str(Blue1) + "', '" + str(Blue2) + "', '" + str(Blue3) + "', '" + str(event) + "');"
+            print(query)
             cursor.execute(query)
             conn.commit()
 
