@@ -27,7 +27,7 @@ if [ "$1" == start ]; then
     rm -f /tmp/AnalysisIR.log
     touch /tmp/AnalysisIR.log
     chmod a+rw /tmp/AnalysisIR.log
-    echo '*/1 * * * * /usr/bin/python3 /home/nmradmin/scouting_python/AnalysisIR.py >> /tmp/AnalysisIR.log 2>&1' >> /var/spool/cron/crontabs/nmradmin
+    echo '*/1 * * * * /usr/bin/python3 /home/nmradmin/scouting_python/AnalysisIR.py >> /tmp/AnalysisIR.log' >> /var/spool/cron/crontabs/nmradmin
   fi
 fi
 
