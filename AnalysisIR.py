@@ -1,5 +1,7 @@
 import mysql.connector as mariaDB
 import numpy as np
+import datetime
+import time
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 from analysisTypes.autonomous import autonomous # Works in Database
 from analysisTypes.ballSummary import ballSummary
@@ -30,6 +32,10 @@ class analysis():
     #   the __init__ function and then call the cursor, columns, wipeCEA, rsRobots, and analyzeTeams functions
     #   from within the __init__ function, which means they will be run automatically when the Class is initialized
     def __init__(self):
+        now = datetime.datetime.now()
+        print(now.strftime("%Y-%m-%d %H:%M:%S"))
+        start_time = time.time()
+
         # Connection to AWS Testing database - use when you would destroy tables with proper data
         # conn = mariaDB.connect(user='admin',
         #                        passwd='Einstein195',
@@ -42,12 +48,15 @@ class analysis():
                                host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                database='team195_scouting')
 
+
         self.cursor = self.conn.cursor()
         self.columns = []
         self._wipeCEA()
         self.rsRobots = self._getTeams()
         self._analyzeTeams()
         self._rankTeamsAll()
+
+        print("Time: %0.2f seconds" % (time.time() - start_time))
 
     # Function to run a query - the query string must be passed to the function
     def _run_query(self, query):
