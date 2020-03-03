@@ -57,6 +57,7 @@ class analysis():
         self._rankTeamsAll()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
+        print()
 
     # Function to run a query - the query string must be passed to the function
     def _run_query(self, query):
