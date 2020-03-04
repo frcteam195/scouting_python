@@ -1,6 +1,8 @@
 import mysql.connector as mariaDB
 import tbapy
-import string
+import xlsxwriter
+import sys
+import getopt
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 x = 195
 team = tba.team(x)
@@ -15,29 +17,78 @@ conn = mariaDB.connect(user='admin',
                        database='team195_scouting')
 cursor = conn.cursor()
 teamList = []
-
-cursor.execute("DELETE FROM BlueAllianceTeams")
-conn.commit()
-
 cursor.execute("SELECT Events.BAEventID FROM Events WHERE Events.CurrentEvent = 1;")
 event = cursor.fetchone()[0]
 
-eventTeams = tba.event_teams(event)
-for team in sorted(eventTeams, key=sortbyteam):
-    tempNick = ''
-    teams = []
-    teams.append(team.team_number)
-    teams.append(team.nickname)
-    cityState = str(team.city) + ' ' + str(team.state_prov) + ' ' + str(team.country)
-    teams.append(cityState)
-    teamList.append(teams)
-    for char in team.nickname:
-        if char.isalnum() or char == ' ':
-            tempNick += char
-    values = "(" + str(team.team_number) + "," + team.nickname + "," + cityState + ")"
-    query = "INSERT INTO BlueAllianceTeams (Team, TeamName, TeamLocation) VALUES " + "('" + str(team.team_number) + \
-             "','" + tempNick + "','" + str(cityState) + "');"
-    print(query)
-    cursor.execute(query)
-    conn.commit()
+print(len(sys.argv))
+if len(sys.argv) != 2:
+    print('Missing argument [db] or [excel]')
+    print('Usage: python3 Schedule.py [db]|[excel]')
+    sys.exit(0)
+else:
+    args = getopt.getopt(sys.argv,"")[1][1]
+    if args == 'db':
+        cursor.execute("DELETE FROM BlueAllianceTeams")
+        conn.commit()
+
+        eventTeams = tba.event_teams(event)
+        for team in sorted(eventTeams, key=sortbyteam):
+            tempNick = ''
+            teams = []
+            teams.append(team.team_number)
+            teams.append(team.nickname)
+            cityState = str(team.city) + ' ' + str(team.state_prov) + ' ' + str(team.country)
+            teams.append(cityState)
+            teamList.append(teams)
+            for char in team.nickname:
+                if char.isalnum() or char == ' ':
+                    tempNick += char
+            values = "(" + str(team.team_number) + "," + team.nickname + "," + cityState + ")"
+            query = "INSERT INTO BlueAllianceTeams (Team, TeamName, TeamLocation) VALUES " + "('" + str(team.team_number) + \
+                     "','" + tempNick + "','" + str(cityState) + "');"
+            print(query)
+            cursor.execute(query)
+            conn.commit()
+
+    elif args == 'excel':
+        workbook = xlsxwriter.Workbook('TEAM LIST.xlsx')
+        worksheet = workbook.add_worksheet()
+
+        row = 0
+        col = 0
+
+        bold = workbook.add_format({'bold': True})
+        merge_format = workbook.add_format({
+            'bold': 1,
+            'border': 1,
+            'align': 'center',
+            'valign': 'vcenter',
+            'fg_color': 'yellow'})
+
+        worksheet.write(col, 0, 'Team')
+        worksheet.write(col, 1, 'TeamName')
+        worksheet.write(col, 2, 'TeamLocation')
+
+        row = 1
+        eventTeams = tba.event_teams(event)
+        teamList = []
+        for team in sorted(eventTeams, key=sortbyteam):
+            tems = []
+            tems.append(team.team_number)
+            tems.append(team.nickname)
+            cityState = str(team.city) + ', ' + str(team.state_prov) + ' ' + str(team.country)
+            tems.append(cityState)
+            teamList.append(tems)
+            for teams in teamList:
+                for team in tems:
+                    worksheet.write_row(row, col, tems)
+            row += 1
+        row = 1
+        print(teamList)
+        workbook.close()
+
+    else:
+        print('The argument needs to be either excel or db')
+        sys.exit(0)
+
 

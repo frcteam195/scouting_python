@@ -4,8 +4,8 @@ tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLr
 x = 195
 team = tba.team(x)
 
-workbooko = xlsxwriter.Workbook('OPRS.xlsx')
-worksheeto = workbooko.add_worksheet()
+workbook = xlsxwriter.Workbook('OPRS.xlsx')
+worksheet = workbook.add_worksheet()
 
 event = '2019necmp'
 row = 0
@@ -16,7 +16,7 @@ eventOpr = tba.event_oprs(event).get("oprs")
 eventoprSorted = [(k[3:], eventOpr[k]) for k in sorted(eventOpr, key=eventOpr.get, reverse=True)]
 
 for team in eventoprSorted:
-    worksheeto.write_row(row, col , team)
+    worksheet.write_row(row, col , team)
     row += 1
 
-workbooko.close()
+workbook.close()
