@@ -68,7 +68,7 @@ class analysis():
         self._wipeCEA()
         self.rsRobots = self._getTeams()
         self._analyzeTeams()
-        # self._rankTeamsAll()
+        self._rankTeamsAll()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
         print()
@@ -206,9 +206,10 @@ class analysis():
                         "FROM CurrentEventAnalysis "
                         "WHERE AnalysisTypeID = " + str(analysis_type) + ";")
         team_sum1 = self.cursor.fetchall() # List of tuples (team, summary1value)
+        # print(team_sum1)
         if len(team_sum1) > 0:
             team_sum1 = [team_tup for team_tup in team_sum1 if team_tup[1] is not None]
-            print(team_sum1)
+            # print(team_sum1)
             sum1 = [item[1] for item in team_sum1]
             percentiles = np.percentile(sum1, [25, 50, 75, 90])
 
@@ -241,10 +242,10 @@ class analysis():
             print('Data was not found in the db')
 
     # run the _rankTeamsSingle for all analysis types in the analysisTypeList defined in this function
-    # def _rankTeamsAll(self):
-    #     analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-    #     for analysisType in analysisTypeList:
-    #         self._rankTeamsSingle(analysisType)
+    def _rankTeamsAll(self):
+        analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        for analysisType in analysisTypeList:
+            self._rankTeamsSingle(analysisType)
 
 
     # Function to insert an rsCEA record into the DB.
