@@ -11,6 +11,13 @@ def sortbyteam(d):
     return d.get('team_number', None)
 
 
+# Pi DB with remote access (e.g. from laptop)
+# conn = mariaDB.connect(user='admin',
+#                        passwd='team195',
+#                        host='10.0.0.195',
+#                        database='team195_scouting')
+# cursor = conn.cursor()
+# Amazon devel DB
 conn = mariaDB.connect(user='admin',
                        passwd='Einstein195',
                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
