@@ -103,12 +103,12 @@ def totalLowBalls(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = statistics.mean(totalLowBallsList)
-        rsCEA['Summary1Value'] = statistics.mean(totalLowBallsList)
+        rsCEA['Summary1Display'] = round(statistics.mean(totalLowBallsList), 1)
+        rsCEA['Summary1Value'] = round(statistics.mean(totalLowBallsList), 1)
         rsCEA['Summary2Display'] = statistics.median(totalLowBallsList)
         rsCEA['Summary2Value'] = statistics.median(totalLowBallsList)
         # summary 3 will be used for rank
-        rsCEA['Summary4Display'] = statistics.mean(totalBallsList)
-        rsCEA['Summary4Value'] = statistics.mean(totalBallsList)
+        rsCEA['Summary4Display'] = round(statistics.mean(totalBallsList), 1)
+        rsCEA['Summary4Value'] = round(statistics.mean(totalBallsList), 1)
 
     return rsCEA

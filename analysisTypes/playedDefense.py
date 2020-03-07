@@ -41,6 +41,6 @@ def playedDefense(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they lost Comm
         # print(playedDefenseList)
-        rsCEA['Summary1Display'] = np.sum(playedDefenseList) / numberOfMatchesPlayed * 100
+        rsCEA['Summary1Display'] = round(np.sum(playedDefenseList) / numberOfMatchesPlayed * 100)
 
     return rsCEA

@@ -102,12 +102,12 @@ def totalUpperBalls(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = statistics.mean(totalUpperBallsList)
-        rsCEA['Summary1Value'] = statistics.mean(totalUpperBallsList)
+        rsCEA['Summary1Display'] = round(statistics.mean(totalUpperBallsList), 1)
+        rsCEA['Summary1Value'] = round(statistics.mean(totalUpperBallsList), 1)
         rsCEA['Summary2Display'] = statistics.median(totalUpperBallsList)
         rsCEA['Summary2Value'] = statistics.median(totalUpperBallsList)
         # 3 will be for rank
-        rsCEA['Summary4Display'] = statistics.mean(totalBallList)
-        rsCEA['Summary4Value'] = statistics.mean(totalBallList)
+        rsCEA['Summary4Display'] = round(statistics.mean(totalBallList), 1)
+        rsCEA['Summary4Value'] = round(statistics.mean(totalBallList), 1)
 
     return rsCEA

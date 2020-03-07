@@ -63,8 +63,8 @@ def climb(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = statistics.mean(totalClimbPointsList)
-        rsCEA['Summary1Value'] = statistics.mean(totalClimbPointsList)
+        rsCEA['Summary1Display'] = round(statistics.mean(totalClimbPointsList), 1)
+        rsCEA['Summary1Value'] = round(statistics.mean(totalClimbPointsList), 1)
         rsCEA['Summary2Display'] = statistics.median(totalClimbPointsList)
         rsCEA['Summary2Value'] = statistics.median(totalClimbPointsList)
         # 3 is rank

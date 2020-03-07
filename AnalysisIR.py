@@ -44,11 +44,11 @@ class analysis():
         # self.cursor = self.conn.cursor()
 
         # Pi DB with remote access (e.g. from laptop)
-        # self.conn = mariaDB.connect(user='admin',
-        #                             passwd='team195',
-        #                             host='10.0.0.195',
-        #                             database='team195_scouting')
-        # self.cursor = self.conn.cursor()
+        self.conn = mariaDB.connect(user='admin',
+                                    passwd='team195',
+                                    host='10.0.0.195',
+                                    database='team195_scouting')
+        self.cursor = self.conn.cursor()
 
         # Pi DB with local access (e.g. from the Pi itself)
         # self.conn = mariaDB.connect(user='admin',
@@ -58,17 +58,17 @@ class analysis():
         # self.cursor = self.conn.cursor()
 
         # Connection to AWS database with proper data
-        self.conn = mariaDB.connect(user='admin',
-                                    passwd='Einstein195',
-                                    host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-                                    database='team195_scouting')
-        self.cursor = self.conn.cursor()
+        # self.conn = mariaDB.connect(user='admin',
+        #                             passwd='Einstein195',
+        #                             host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+        #                             database='team195_scouting')
+        # self.cursor = self.conn.cursor()
 
         self.columns = []
         self._wipeCEA()
         self.rsRobots = self._getTeams()
         self._analyzeTeams()
-        self._rankTeamsAll()
+        # self._rankTeamsAll()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
         print()
@@ -238,10 +238,10 @@ class analysis():
             self.conn.commit()
 
     # run the _rankTeamsSingle for all analysis types in the analysisTypeList defined in this function
-    def _rankTeamsAll(self):
-        analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-        for analysisType in analysisTypeList:
-            self._rankTeamsSingle(analysisType)
+    # def _rankTeamsAll(self):
+    #     analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    #     for analysisType in analysisTypeList:
+    #         self._rankTeamsSingle(analysisType)
 
 
     # Function to insert an rsCEA record into the DB.

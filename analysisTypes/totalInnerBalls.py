@@ -104,12 +104,12 @@ def totalInnerBalls(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = str(statistics.mean(totalInnerBallsList))
-        rsCEA['Summary1Value'] = statistics.mean(totalInnerBallsList)
+        rsCEA['Summary1Display'] = str(round(statistics.mean(totalInnerBallsList), 1))
+        rsCEA['Summary1Value'] = round(statistics.mean(totalInnerBallsList), 1)
         rsCEA['Summary2Display'] = statistics.median(totalInnerBallsList)
         rsCEA['Summary2Value'] = statistics.median(totalInnerBallsList)
         # 3 will be for rank
-        rsCEA['Summary4Display'] = str(statistics.mean(totalBallsList))
-        rsCEA['Summary4Value'] = statistics.mean(totalBallsList)
+        rsCEA['Summary4Display'] = str(round(statistics.mean(totalBallsList), 1))
+        rsCEA['Summary4Value'] = round(statistics.mean(totalBallsList), 1)
 
     return rsCEA

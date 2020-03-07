@@ -132,8 +132,8 @@ def totalScore(analysis, rsRobotMatches):
 
     # Set the summary questions
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = statistics.mean(totalPointsList)
-        rsCEA['Summary1Value'] = statistics.mean(totalPointsList)
+        rsCEA['Summary1Display'] = round(statistics.mean(totalPointsList), 1)
+        rsCEA['Summary1Value'] = round(statistics.mean(totalPointsList), 1)
         rsCEA['Summary2Display'] = statistics.median(totalPointsList)
         rsCEA['Summary2Value'] = statistics.median(totalPointsList)
 

@@ -46,6 +46,6 @@ def groundPickup(analysis, rsRobotMatches):
     # Create summary data
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they performed a Ground Pickup
-        rsCEA['Summary1Display'] = np.sum(groundPickupList) / numberOfMatchesPlayed * 100
+        rsCEA['Summary1Display'] = (round(np.sum(groundPickupList) / numberOfMatchesPlayed * 100))
 
     return rsCEA

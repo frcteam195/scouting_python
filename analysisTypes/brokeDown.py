@@ -48,6 +48,6 @@ def brokeDown(analysis, rsRobotMatches):
     # Create summary data
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they lost Comm
-        rsCEA['Summary1Display'] = np.sum(brokeDownList) / numberOfMatchesPlayed * 100
+        rsCEA['Summary1Display'] = round(np.sum(brokeDownList) / numberOfMatchesPlayed * 100, 1)
 
     return rsCEA
