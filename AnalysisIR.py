@@ -37,19 +37,33 @@ class analysis():
         start_time = time.time()
 
         # Connection to AWS Testing database - use when you would destroy tables with proper data
-        # conn = mariaDB.connect(user='admin',
-        #                        passwd='Einstein195',
-        #                        host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-        #                        database='team195_scouting')
+        # self.conn = mariaDB.connect(user='admin',
+        #                             passwd='Einstein195',
+        #                             host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+        #                             database='team195_scouting')
+        # self.cursor = self.conn.cursor()
+
+        # Pi DB with remote access (e.g. from laptop)
+        # self.conn = mariaDB.connect(user='admin',
+        #                             passwd='team195',
+        #                             host='10.0.0.195',
+        #                             database='team195_scouting')
+        # self.cursor = self.conn.cursor()
+
+        # Pi DB with local access (e.g. from the Pi itself)
+        # self.conn = mariaDB.connect(user='admin',
+        #                             passwd='team195',
+        #                             host='localhost',
+        #                             database='team195_scouting')
+        # self.cursor = self.conn.cursor()
 
         # Connection to AWS database with proper data
         self.conn = mariaDB.connect(user='admin',
-                               passwd='Einstein195',
-                               host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-                               database='team195_scouting')
-
-
+                                    passwd='Einstein195',
+                                    host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                    database='team195_scouting')
         self.cursor = self.conn.cursor()
+
         self.columns = []
         self._wipeCEA()
         self.rsRobots = self._getTeams()

@@ -1,5 +1,19 @@
 import mysql.connector as mariaDB
 
+# Pi DB with remote access (e.g. from laptop)
+# conn = mariaDB.connect(user='admin',
+#                        passwd='team195',
+#                        host='10.0.0.195',
+#                        database='team195_scouting')
+# cursor = conn.cursor()
+
+# Pi DB with local access (e.g. from the Pi itself)
+# conn = mariaDB.connect(user='admin',
+#                        passwd='team195',
+#                        host='localhost',
+#                        database='team195_scouting')
+# cursor = conn.cursor()
+
 # Connection to AWS database with proper data
 conn = mariaDB.connect(user='admin',
                        passwd='Einstein195',
@@ -7,10 +21,10 @@ conn = mariaDB.connect(user='admin',
                        database='team195_scouting')
 cursor = conn.cursor()
 
-
 cursor.execute("SELECT Matches.* FROM Matches LEFT JOIN MatchScouting  "
                "ON (Matches.EventID = MatchScouting.EventID) "
                "AND Matches.MatchID = MatchScouting.MatchID "
+               "JOIN Events ON (Events.EventID = Matches.EventID) "
                "WHERE (((Events.CurrentEvent) = 1) AND ((MatchScouting.MatchID) is Null));")
 rsMatches = cursor.fetchall()
 # print(rsMatches)
@@ -19,7 +33,7 @@ rsMatches = cursor.fetchall()
 for row in rsMatches:
     i = 1
     while i <= 6:
-        rsMatchScoutingRecord = {'MatchID': row[0], 'EventID': row[1], 'Team': row[i + 2], 'AllianceStationID': i}
+        rsMatchScoutingRecord = {'MatchID': row[0], 'EventID': row[1], 'Team': row[i + 2], 'AllianceStationID': str(i)}
         # print(rsMatchScoutingRecord)
         items = rsMatchScoutingRecord.items()
         columns = str(tuple([x[0] for x in items])).replace("'", "")
