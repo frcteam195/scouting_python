@@ -7,10 +7,6 @@ tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLr
 x = 195
 team = tba.team(x)
 
-def sortbyteam(d):
-    return d.get('team_number', None)
-
-
 # Pi DB with remote access (e.g. from laptop)
 # conn = mariaDB.connect(user='admin',
 #                        passwd='team195',
@@ -57,16 +53,15 @@ else:
         row = 0
         col = 0
 
-
         matchesPlayed = tba.event_rankings(event).get('rankings')
-        matchesplayedDict = {}
+        matchesPlayedDict = {}
         for team in matchesPlayed:
-            matchesplayedDict[team.get("rank")] = team.get("matches_played")
+            matchesPlayedDict[team.get("rank")] = team.get("matches_played")
 
         row = 1
         col = 2
-        for key in matchesplayedDict.keys():
-            worksheet.write(row, col, matchesplayedDict[key])
+        for key in matchesPlayedDict.keys():
+            worksheet.write(row, col, matchesPlayedDict[key])
             row += 1
 
         teamRanks = tba.event_rankings(event).get('rankings')
