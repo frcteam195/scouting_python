@@ -57,14 +57,6 @@ else:
         row = 0
         col = 0
 
-        event = '2019necmp'
-        bold = workbook.add_format({'bold': True})
-        merge_format = workbook.add_format({
-            'bold': 1,
-            'border': 1,
-            'align': 'center',
-            'valign': 'vcenter',
-            'fg_color': 'yellow'})
 
         matchesPlayed = tba.event_rankings(event).get('rankings')
         matchesplayedDict = {}
@@ -78,15 +70,15 @@ else:
             row += 1
 
         teamRanks = tba.event_rankings(event).get('rankings')
-        teamrankDict = {}
+        teamRankDict = {}
         for rank in teamRanks:
-            teamrankDict[rank.get("rank")] = rank.get("team_key")[3:]
+            teamRankDict[rank.get("rank")] = rank.get("team_key")[3:]
 
         row = 1
         col = 0
-        for key in teamrankDict.keys():
+        for key in teamRankDict.keys():
             worksheet.write(row, col, key)
-            worksheet.write(row, col + 1, teamrankDict[key])
+            worksheet.write(row, col + 1, teamRankDict[key])
             row += 1
 
         quals = tba.event_rankings(event).get('rankings')
