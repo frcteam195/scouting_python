@@ -206,36 +206,39 @@ class analysis():
                         "FROM CurrentEventAnalysis "
                         "WHERE AnalysisTypeID = " + str(analysis_type) + ";")
         team_sum1 = self.cursor.fetchall() # List of tuples (team, summary1value)
-        team_sum1 = [team_tup for team_tup in team_sum1 if team_tup[1] is not None]
-        # print(team_sum1)
-        sum1 = [item[1] for item in team_sum1]
-        percentiles = np.percentile(sum1, [25, 50, 75, 90])
+        if len(team_sum1) > 0:
+            team_sum1 = [team_tup for team_tup in team_sum1 if team_tup[1] is not None]
+            print(team_sum1)
+            sum1 = [item[1] for item in team_sum1]
+            percentiles = np.percentile(sum1, [25, 50, 75, 90])
 
-        team_coloring = {}
-        for team in team_sum1:
-            if team[1] <= percentiles[0]:
-                team_color = 1
-                team_display = 10
-            elif team[1] <= percentiles[1]:
-                team_color = 2
-                team_display = 25
-            elif team[1] <= percentiles[2]:
-                team_color = 3
-                team_display = 50
-            elif team[1] <= percentiles[3]:
-                team_color = 4
-                team_display = 75
-            else:
-                team_color = 5
-                team_display = 90
+            team_coloring = {}
+            for team in team_sum1:
+                if team[1] <= percentiles[0]:
+                    team_color = 1
+                    team_display = 10
+                elif team[1] <= percentiles[1]:
+                    team_color = 2
+                    team_display = 25
+                elif team[1] <= percentiles[2]:
+                    team_color = 3
+                    team_display = 50
+                elif team[1] <= percentiles[3]:
+                    team_color = 4
+                    team_display = 75
+                else:
+                    team_color = 5
+                    team_display = 90
 
-            query = "UPDATE CurrentEventAnalysis SET CurrentEventAnalysis.Summary3Format = " \
-                    + str(team_color) + ", CurrentEventAnalysis.Summary3Display = "\
-                    + str(team_display) + ", CurrentEventAnalysis.Summary3Value = " + str(team_display) \
-                    + " WHERE CurrentEventAnalysis.Team = '" + str(team[0]) \
-                    + "' AND CurrentEventAnalysis.AnalysisTypeID = " + str(analysis_type) + " ;"
-            self._run_query(query)
-            self.conn.commit()
+                query = "UPDATE CurrentEventAnalysis SET CurrentEventAnalysis.Summary3Format = " \
+                        + str(team_color) + ", CurrentEventAnalysis.Summary3Display = "\
+                        + str(team_display) + ", CurrentEventAnalysis.Summary3Value = " + str(team_display) \
+                        + " WHERE CurrentEventAnalysis.Team = '" + str(team[0]) \
+                        + "' AND CurrentEventAnalysis.AnalysisTypeID = " + str(analysis_type) + " ;"
+                self._run_query(query)
+                self.conn.commit()
+        else:
+            print('Data was not found in the db')
 
     # run the _rankTeamsSingle for all analysis types in the analysisTypeList defined in this function
     # def _rankTeamsAll(self):

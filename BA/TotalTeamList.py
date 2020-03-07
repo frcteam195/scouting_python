@@ -1,21 +1,21 @@
 import mysql.connector as mariaDB
 import tbapy
-import string
-tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
-year = 2020
+import datetime
 
-def sortbyteam(d):
-    return d.get('team_number', None)
+tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
+currentYear = datetime.datetime.today().year
+
 
 def onlyascii(s):
-    return "".join(i for i in s if ord(i)<128 and ord(i)!=39)
+    return "".join(i for i in s if ord(i) < 128 and ord(i) != 39)
+
 
 conn = mariaDB.connect(user='admin',
                        passwd='Einstein195',
                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                        database='team195_scouting')
 cursor = conn.cursor()
-totalTeams = tba.teams(year=2020)
+totalTeams = tba.teams(year=currentYear)
 teamList = []
 
 for team in totalTeams:

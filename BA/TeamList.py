@@ -42,11 +42,8 @@ else:
         eventTeams = tba.event_teams(event)
         for team in sorted(eventTeams, key=sortbyteam):
             tempNick = ''
-            teams = []
-            teams.append(team.team_number)
-            teams.append(team.nickname)
             cityState = str(team.city) + ' ' + str(team.state_prov) + ' ' + str(team.country)
-            teams.append(cityState)
+            teams = [team.team_number, team.nickname, cityState]
             teamList.append(teams)
             for char in team.nickname:
                 if char.isalnum() or char == ' ':
@@ -54,7 +51,7 @@ else:
             values = "(" + str(team.team_number) + "," + team.nickname + "," + cityState + ")"
             query = "INSERT INTO BlueAllianceTeams (Team, TeamName, TeamLocation) VALUES " + "('" + str(team.team_number) + \
                      "','" + tempNick + "','" + str(cityState) + "');"
-            print(query)
+            # print(query)
             cursor.execute(query)
             conn.commit()
 
@@ -65,14 +62,6 @@ else:
         row = 0
         col = 0
 
-        bold = workbook.add_format({'bold': True})
-        merge_format = workbook.add_format({
-            'bold': 1,
-            'border': 1,
-            'align': 'center',
-            'valign': 'vcenter',
-            'fg_color': 'yellow'})
-
         worksheet.write(col, 0, 'Team')
         worksheet.write(col, 1, 'TeamName')
         worksheet.write(col, 2, 'TeamLocation')
@@ -81,18 +70,15 @@ else:
         eventTeams = tba.event_teams(event)
         teamList = []
         for team in sorted(eventTeams, key=sortbyteam):
-            tems = []
-            tems.append(team.team_number)
-            tems.append(team.nickname)
             cityState = str(team.city) + ', ' + str(team.state_prov) + ' ' + str(team.country)
-            tems.append(cityState)
-            teamList.append(tems)
-            for teams in teamList:
-                for team in tems:
-                    worksheet.write_row(row, col, tems)
+            tempTeamsList = [team.team_number, team.nickname, cityState]
+            teamList.append(tempTeamsList)
+            for teamData in teamList:
+                for tempTeam in tempTeamsList:
+                    worksheet.write_row(row, col, tempTeamsList)
             row += 1
         row = 1
-        print(teamList)
+        # print(teamList)
         workbook.close()
 
     else:

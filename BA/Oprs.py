@@ -7,8 +7,6 @@ tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLr
 x = 195
 team = tba.team(x)
 
-def sortbyteam(d):
-    return d.get('team_number', None)
 
 # Pi DB with remote access (e.g. from laptop)
 # conn = mariaDB.connect(user='admin',
@@ -39,13 +37,13 @@ else:
 
         eventTeams = tba.event_teams(event)
         eventOpr = tba.event_oprs(event).get("oprs")
-        eventoprSorted = [(k[3:], eventOpr[k]) for k in sorted(eventOpr, key=eventOpr.get, reverse=True)]
-        print(eventoprSorted)
+        eventOPRSorted = [(k[3:], eventOpr[k]) for k in sorted(eventOpr, key=eventOpr.get, reverse=True)]
+        # print(eventOPRSorted)
 
-        for team in eventoprSorted:
+        for team in eventOPRSorted:
             query = "INSERT INTO BlueAllianceOPR (Team, OPR) VALUES " + "('" + str(team[0]) + "', '" + \
                     str(team[1]) + "');"
-            print(query)
+            # print(query)
             cursor.execute(query)
             conn.commit()
 
@@ -58,9 +56,9 @@ else:
 
         eventOpr = tba.event_oprs(event).get("oprs")
 
-        eventoprSorted = [(k[3:], eventOpr[k]) for k in sorted(eventOpr, key=eventOpr.get, reverse=True)]
+        eventOPRSorted = [(k[3:], eventOpr[k]) for k in sorted(eventOpr, key=eventOpr.get, reverse=True)]
 
-        for team in eventoprSorted:
+        for team in eventOPRSorted:
             worksheet.write_row(row, col, team)
             row += 1
 

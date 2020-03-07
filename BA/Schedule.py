@@ -94,7 +94,7 @@ else:
         worksheet.write(col, 6, 'BlueTeam3')
         worksheet.write(col, 7, 'BAEventID')
 
-        eventmatchList = []
+        eventMatchList = []
         eventMatches = tba.event_matches(event)
 
         numberMatch = []
@@ -117,7 +117,7 @@ else:
                 matchNumber['blue'] = match.alliances.get('blue').get('team_keys')
                 matchNumber['blue'] = [key.replace('frc', '') for key in matchNumber['blue']]
                 # if match.comp_level == 'qm':
-                eventmatchList.append(matchNumber)
+                eventMatchList.append(matchNumber)
                 for key in matchNumber.keys():
                     worksheet.write_row(row, col, matchNumber[key])
                 row += 1
@@ -129,7 +129,7 @@ else:
                 matchNumber = {}
                 matchNumber['red'] = match.alliances.get('red').get('team_keys')
                 matchNumber['red'] = [key.replace('frc', '') for key in matchNumber['red']]
-                eventmatchList.append(matchNumber)
+                eventMatchList.append(matchNumber)
                 for key in matchNumber.keys():
                     worksheet.write_row(row, col, matchNumber[key])
                 row += 1

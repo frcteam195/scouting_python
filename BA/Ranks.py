@@ -7,10 +7,6 @@ tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLr
 x = 195
 team = tba.team(x)
 
-def sortbyteam(d):
-    return d.get('team_number', None)
-
-
 # Pi DB with remote access (e.g. from laptop)
 # conn = mariaDB.connect(user='admin',
 #                        passwd='team195',
@@ -57,36 +53,27 @@ else:
         row = 0
         col = 0
 
-        event = '2019necmp'
-        bold = workbook.add_format({'bold': True})
-        merge_format = workbook.add_format({
-            'bold': 1,
-            'border': 1,
-            'align': 'center',
-            'valign': 'vcenter',
-            'fg_color': 'yellow'})
-
         matchesPlayed = tba.event_rankings(event).get('rankings')
-        matchesplayedDict = {}
+        matchesPlayedDict = {}
         for team in matchesPlayed:
-            matchesplayedDict[team.get("rank")] = team.get("matches_played")
+            matchesPlayedDict[team.get("rank")] = team.get("matches_played")
 
         row = 1
         col = 2
-        for key in matchesplayedDict.keys():
-            worksheet.write(row, col, matchesplayedDict[key])
+        for key in matchesPlayedDict.keys():
+            worksheet.write(row, col, matchesPlayedDict[key])
             row += 1
 
         teamRanks = tba.event_rankings(event).get('rankings')
-        teamrankDict = {}
+        teamRankDict = {}
         for rank in teamRanks:
-            teamrankDict[rank.get("rank")] = rank.get("team_key")[3:]
+            teamRankDict[rank.get("rank")] = rank.get("team_key")[3:]
 
         row = 1
         col = 0
-        for key in teamrankDict.keys():
+        for key in teamRankDict.keys():
             worksheet.write(row, col, key)
-            worksheet.write(row, col + 1, teamrankDict[key])
+            worksheet.write(row, col + 1, teamRankDict[key])
             row += 1
 
         quals = tba.event_rankings(event).get('rankings')
