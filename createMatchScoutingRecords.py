@@ -1,11 +1,11 @@
 import mysql.connector as mariaDB
 
 # Pi DB with remote access (e.g. from laptop)
-# conn = mariaDB.connect(user='admin',
-#                        passwd='team195',
-#                        host='10.0.0.195',
-#                        database='team195_scouting')
-# cursor = conn.cursor()
+conn = mariaDB.connect(user='admin',
+                       passwd='team195',
+                       host='10.0.0.195',
+                       database='team195_scouting')
+cursor = conn.cursor()
 
 # Pi DB with local access (e.g. from the Pi itself)
 # conn = mariaDB.connect(user='admin',
@@ -15,29 +15,35 @@ import mysql.connector as mariaDB
 # cursor = conn.cursor()
 
 # Connection to AWS database with proper data
-conn = mariaDB.connect(user='admin',
-                       passwd='Einstein195',
-                       host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-                       database='team195_scouting')
-cursor = conn.cursor()
+# conn = mariaDB.connect(user='admin',
+#                        passwd='Einstein195',
+#                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+#                        database='team195_scouting')
+# cursor = conn.cursor()
 
-cursor.execute("SELECT Matches.* FROM Matches LEFT JOIN MatchScouting  "
+cursor.execute("SELECT Matches.* FROM Matches LEFT JOIN MatchScouting "
                "ON (Matches.EventID = MatchScouting.EventID) "
                "AND Matches.MatchID = MatchScouting.MatchID "
                "JOIN Events ON (Events.EventID = Matches.EventID) "
                "WHERE (((Events.CurrentEvent) = 1) AND ((MatchScouting.MatchID) is Null));")
 rsMatches = cursor.fetchall()
-# print(rsMatches)
+# cursor.execute("SELECT Matches.* FROM Matches "
+#                "JOIN Events ON (Events.EventID = Matches.EventID) "
+#                "WHERE ((Events.CurrentEvent) = 1) ;")
+# rsMatches = cursor.fetchall()
+print(rsMatches)
 
 # Find matches from the Matches table and add new records to the MatchScouting table if they do not already exist
 for row in rsMatches:
     i = 1
     while i <= 6:
         rsMatchScoutingRecord = {'MatchID': row[0], 'EventID': row[1], 'Team': row[i + 2], 'AllianceStationID': str(i)}
-        # print(rsMatchScoutingRecord)
+        print(rsMatchScoutingRecord)
         items = rsMatchScoutingRecord.items()
         columns = str(tuple([x[0] for x in items])).replace("'", "")
         values = str(tuple([x[1] for x in items]))
+        print(columns)
+        print(values)
         cursor.execute("INSERT INTO MatchScouting "
                        + columns + " VALUES "
                        + values + ";")
