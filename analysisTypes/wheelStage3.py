@@ -34,6 +34,7 @@ def wheelStage3(analysis, rsRobotMatches):
             if wheelStage3Status == 0 and wheelStage3Attempts == 0:  # No attempt:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = '-'
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
+                timeList.append(0)
             elif wheelStage3Status == 1:
                 sucessTotal += 1
                 timeList.append(wheelStage3Time)
@@ -54,7 +55,7 @@ def wheelStage3(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if len(timeList) > 0:
-        rsCEA['Summary1Display'] = str(round(statistics.mean(timeList), 1))
+        rsCEA['Summary1Display'] = round(statistics.mean(timeList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(timeList), 1)
         rsCEA['Summary2Display'] = str(statistics.median(timeList))
         rsCEA['Summary2Value'] = statistics.median(timeList)
