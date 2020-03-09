@@ -206,7 +206,6 @@ class analysis():
                         "FROM CurrentEventAnalysis "
                         "WHERE AnalysisTypeID = " + str(analysis_type) + ";")
         team_sum1 = self.cursor.fetchall() # List of tuples (team, summary1value)
-        # print(team_sum1)
         if len(team_sum1) > 0:
             team_sum1 = [team_tup for team_tup in team_sum1 if team_tup[1] is not None]
             # print(team_sum1)
@@ -245,6 +244,7 @@ class analysis():
     def _rankTeamsAll(self):
         analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         for analysisType in analysisTypeList:
+            # print(analysisType)
             self._rankTeamsSingle(analysisType)
 
 
