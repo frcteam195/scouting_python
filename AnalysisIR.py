@@ -22,7 +22,7 @@ from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
 from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
 from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
 from analysisTypes.startingPosition import startingPosition # Works in Database
-from analysisTypes.ranking import ranking
+# from analysisTypes.ranking import ranking
 # Define a Class called analysis
 class analysis():
     # Inside the class there are several functions defined _run_query, _setColumns, _wipeCEA, _getTeams,
@@ -44,11 +44,11 @@ class analysis():
         # self.cursor = self.conn.cursor()
 
         # Pi DB with remote access (e.g. from laptop)
-        self.conn = mariaDB.connect(user='admin',
-                                    passwd='team195',
-                                    host='10.0.0.195',
-                                    database='team195_scouting')
-        self.cursor = self.conn.cursor()
+        # self.conn = mariaDB.connect(user='admin',
+        #                             passwd='team195',
+        #                             host='10.0.0.195',
+        #                             database='team195_scouting')
+        # self.cursor = self.conn.cursor()
 
         # Pi DB with local access (e.g. from the Pi itself)
         # self.conn = mariaDB.connect(user='admin',
@@ -58,10 +58,10 @@ class analysis():
         # self.cursor = self.conn.cursor()
 
         # Connection to AWS database with proper data
-        # self.conn = mariaDB.connect(user='admin',
-        #                             passwd='Einstein195',
-        #                             host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-        #                             database='team195_scouting')
+        self.conn = mariaDB.connect(user='admin',
+                                    passwd='Einstein195',
+                                    host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                    database='team195_scouting')
         self.cursor = self.conn.cursor()
 
         self.columns = []
