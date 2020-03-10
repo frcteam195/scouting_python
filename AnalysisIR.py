@@ -22,7 +22,7 @@ from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
 from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
 from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
 from analysisTypes.startingPosition import startingPosition # Works in Database
-
+from analysisTypes.ranking import ranking
 # Define a Class called analysis
 class analysis():
     # Inside the class there are several functions defined _run_query, _setColumns, _wipeCEA, _getTeams,
@@ -62,7 +62,7 @@ class analysis():
         #                             passwd='Einstein195',
         #                             host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
         #                             database='team195_scouting')
-        # self.cursor = self.conn.cursor()
+        self.cursor = self.conn.cursor()
 
         self.columns = []
         self._wipeCEA()
@@ -163,6 +163,9 @@ class analysis():
 
                 rsCEA = playedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
+
+                # rsCEA = ranking(analysis=self, rsRobotMatches=rsRobotMatches)
+                # self._insertAnalysis(rsCEA)
 
                 rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
