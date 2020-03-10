@@ -21,6 +21,7 @@ cursor = conn.cursor()
 #                        database='team195_scouting')
 # cursor = conn.cursor()
 
+
 cursor.execute("SELECT Matches.* FROM Matches LEFT JOIN MatchScoutingL2  "
                "ON (Matches.EventID = MatchScoutingL2.EventID) "
                "AND Matches.MatchID = MatchScoutingL2.MatchID "
@@ -33,7 +34,7 @@ rsMatches = cursor.fetchall()
 for row in rsMatches:
     i = 1
     while i <= 3:
-        rsMatchScoutingRecord = {'MatchID': row[0], 'EventID': row[1], 'TeamRed': row[i + 2], 'TeamBlue': row[i + 5]}
+        rsMatchScoutingRecord = {'MatchID': row[0], 'EventID': row[1], 'TeamRed': row[i + 2], 'TeamBlue': row[i + 5], 'AllianceStationID': i+6}
         # print(rsMatchScoutingRecord)
         items = rsMatchScoutingRecord.items()
         columns = str(tuple([x[0] for x in items])).replace("'", "")
